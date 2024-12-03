@@ -1,0 +1,17 @@
+/* Custom arrow */
+.custom-arrow {
+    display: inline-block;
+    transition: transform 0.3s ease; /* Smooth rotation transition */
+}
+
+/* Rotate the arrow when the menu is open */
+.custom-arrow {
+    transform: rotate(0deg); /* Default rotation */
+}
+
+/* Ensure arrow rotation for open states */
+li > div[aria-expanded="true"] .custom-arrow {
+    transform: rotate(90deg); /* Rotate to point down */
+}
+
+

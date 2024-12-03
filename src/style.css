@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+body {
+  @apply font-sans;
+  background-color: #f6fcff;
+}
+
+/* custom banner design for landing page */
+.custom-shape-divider-bottom-1726984966 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1726984966 svg {
+  position: relative;
+  display: block;
+  width: calc(179% + 1.3px);
+  height: 204px;
+  transform: rotateY(180deg);
+}
+
+.custom-shape-divider-bottom-1726984966 .shape-fill {
+  fill: #f6fcff;
+}

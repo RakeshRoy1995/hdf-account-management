@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+    @apply font-sans;
+    font-family: 'Poppins', 'Roboto';
+    background-color: #f6fcff;
+}
+
+
+
+
+/* custom calendar icon */
+.sd-container {
+    position: relative;
+    float: left;
+  }
+
+  .sd {
+    padding: 5px 10px;
+    height: 30px;
+    width: 150px;
+  }
+
+  .open-button {
+    position: absolute;
+    top: 20px;
+    right: 11px;
+    width: 25px;
+    height: 25px;
+    background: #fff;
+    pointer-events: none;
+  }
+
+  .open-button button {
+    border: none;
+    background: transparent;
+  }
+
+  /* custom-styles.css */
+.rdt_TableHeadRow {
+  text-transform: uppercase;
+  background-color: #f3f2f6!important;
+}
+
+.rdt_TableBody {
+  --tw-bg-opacity: 1!important;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity))!important;
+}
+
+.rdt_TableRow{
+  text-align: center!important;
+  /* padding: 0.75rem!important; */
+  /* border-width: 1px!important; */
+  border-bottom-width: 0px!important;
+
+}
+
+.rdt_TableCell {
+  border: 1px solid #f3f2f6;
+}
+
+/* required field sign */
+.required_field{
+  color:#D74367
+}
