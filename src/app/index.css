@@ -66,3 +66,13 @@ body {
 .required_field{
   color:#D74367
 }
+@layer utilities {
+  .bg-overlay {
+    background-color: transparent;
+    background-image: url('../../assets/loginPageImage/overlay.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+  }
+}

@@ -92,12 +92,12 @@ function Layout() {
     <div className="flex">
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full bg-DecenaryColor shadow-lg z-50 transition-all duration-300 ${isSidebarOpen ? "w-64" : "w-16"} `}
+        className={`fixed top-0 left-0 h-full bg-Shadesblack hover:bg-secondaryColor shadow-lg z-50 transition-all duration-300 ${isSidebarOpen ? "w-64" : "w-16"} `}
       >
         {/* Sidebar Header with Toggle Button */}
         <div className="flex items-center justify-between p-4  border-gray-700 ">
-          <h2 className={`text-QuaternaryColor text-lg font-semibold  ${isSidebarOpen ? "block" : "hidden"}`}>MENU</h2>
-          <button onClick={toggleSidebar} className="text-QuaternaryColor hover:text-QuaternaryColor focus:outline-none">
+          <h2 className={`text-QuinaryColor text-lg font-semibold  ${isSidebarOpen ? "block" : "hidden"}`}>MENU</h2>
+          <button onClick={toggleSidebar} className="text-QuinaryColor hover:text-QuinaryColor focus:outline-none">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M4 7L20 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               <path d="M4 12L20 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />

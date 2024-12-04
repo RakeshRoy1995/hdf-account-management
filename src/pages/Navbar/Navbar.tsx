@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
 
   return (
     <header>
-      <nav className="max-w-full flex items-center justify-between p-4 bg-white shadow">
+      <nav className="max-w-full flex items-center justify-between p-4 bg-Shadesblack shadow">
         <Link to={"/admin"}>
         <div className="flex items-center">
           <div className="flex items-center">
