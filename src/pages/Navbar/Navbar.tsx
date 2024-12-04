@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import UserPicture from "../../../assets/loginPageImage/userAvatar.png";
-
+import logo from "../../../assets/loginPageImage/sdf-logo.png";
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const [isDropdownOpen, setDropdownOpen] = useState<boolean>(false);
@@ -40,16 +40,16 @@ const Navbar: React.FC = () => {
     <header>
       <nav className="max-w-full flex items-center justify-between p-4 bg-Shadesblack shadow">
         <Link to={"/admin"}>
-        <div className="flex items-center">
-          <div className="flex items-center">
-            <span className="bg-[#FFCC1D] rounded-full h-8 w-8 flex items-center justify-center absolute -mt-3">
-              <span className="text-white text-xl font-bold"></span>
-            </span>
-            <span className="text-teal-700 text-4xl font-bold ml-14 relative">
-              LMS
-            </span>
+
+          <div className="flex items-center ml-16">
+          <img
+                src={logo} // Replace with the actual logo path
+                alt="SDF Logo"
+                className="h-auto w-20"
+              />
+
           </div>
-        </div>
+
         </Link>
         <div className="flex items-center space-x-4">
           <IoMdNotificationsOutline className="text-gray-600 text-2xl mr-10" />

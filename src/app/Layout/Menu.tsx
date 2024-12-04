@@ -212,8 +212,8 @@
 //                       <li
 //                         className={`cursor-pointer flex items-center p-3 gap-2 ${
 //                           userOpen
-//                             ? "bg-primaryColor text-white font-bold" // Apply hover styles when userOpen is true
-//                             : "hover:bg-primaryColor hover:text-white hover:font-bold" // Apply hover styles only on hover when userOpen is false
+//                             ? "bg-secondaryColor text-white font-bold" // Apply hover styles when userOpen is true
+//                             : "hover:bg-secondaryColor hover:text-white hover:font-bold" // Apply hover styles only on hover when userOpen is false
 //                         }`}
 //                         onClick={() =>
 //                           setTargetOpen({
@@ -249,7 +249,7 @@
 //                                 <li
 //                                   className={`w-full my-5 cursor-pointer border-l-2 ${
 //                                     activeItem === d?.name
-//                                       ? "border-l-primaryColor text-primaryColor font-bold"
+//                                       ? "border-l-secondaryColor text-secondaryColor font-bold"
 //                                       : "border-transparent"
 //                                   }`}
 //                                   onClick={() => handleActive(d)} // Set as active when clicked
@@ -271,7 +271,7 @@
 //                   )}
 //                 </>
 //               ) : (
-//                 <li className="cursor-pointer flex items-center p-3 hover:bg-primaryColor hover:text-white gap-2 hover:font-bold">
+//                 <li className="cursor-pointer flex items-center p-3 hover:bg-secondaryColor hover:text-white gap-2 hover:font-bold">
 //                   <Link to={menu_data?.route} className="flex items-center">
 //                     <svg
 //                       width="24"
@@ -499,7 +499,7 @@ export default function Menu({ isSidebarOpen }) {
   // console.log(`menu?.data`,menu?.data );
 
   return (
-    <ul className="w-full font-sans overflow-y-auto">
+    <ul className="w-full font-sans overflow-y-auto text-white">
       {menu?.data?.map(
         (menu_data: any) =>
           menu_data?.checked && menu_data?.menuModuleIds?.includes(4) && (
@@ -508,7 +508,7 @@ export default function Menu({ isSidebarOpen }) {
                  (
                   <>
                     <li
-                      className={`cursor-pointer flex items-center p-3 gap-2 ${TargetOpen[menu_data?.name] ? "bg-primaryColor text-white  text-base font-bold" : "hover:bg-primaryColor hover:text-white  text-sm"}`}
+                      className={`cursor-pointer flex items-center p-3 gap-2 ${TargetOpen[menu_data?.name] ? "bg-secondaryColor text-white  text-base font-bold" : "hover:bg-secondaryColor hover:text-white  text-sm"}`}
                       onClick={() =>
                         setTargetOpen((prev) => ({
                           ...prev,
@@ -520,7 +520,7 @@ export default function Menu({ isSidebarOpen }) {
                         width="20px"
                         height="20px"
                         viewBox="0 0 24 24"
-                        fill="currentColor"
+                        fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
@@ -547,7 +547,7 @@ export default function Menu({ isSidebarOpen }) {
                               <li
                                 key={submenu?.name}
                                 onClick={() => handleActive(submenu)}
-                                className={`w-full my-2 cursor-pointer border-l-2 ${activeItem === submenu?.name ? "border-l-primaryColor text-primaryColor font-base" : "border-transparent"}`}
+                                className={`w-full my-2 cursor-pointer border-l-2 ${activeItem === submenu?.name ? "border-l-secondaryColor text-secondaryColor font-base" : "border-transparent"}`}
                               >
                                 <Link
                                   to={submenu?.route}
@@ -569,7 +569,7 @@ export default function Menu({ isSidebarOpen }) {
               ) : (
                 <Link
                   to={menu_data?.route}
-                  className={`cursor-pointer flex items-center p-3 gap-2 hover:bg-primaryColor hover:text-white ${isSidebarOpen ? "" : ""}`}
+                  className={`cursor-pointer flex items-center p-3 gap-2 hover:bg-secondaryColor hover:text-white ${isSidebarOpen ? "" : ""}`}
                 >
                   <svg
                     width="20px"
