@@ -73,10 +73,10 @@ const Login = () => {
 
   return (
     <div
-      className="flex  justify-end max-h-screen bg-gray-100 bg-cover bg-center items-center overflow-hidden"
+      className="flex  justify-end min-h-screen bg-gray-100 bg-cover bg-center items-center overflow-hidden"
       style={{ backgroundImage: `url(${bgImage})` }}
     >
-      <div className=" flex justify-end gap-5 h-[700px] w-[800px] bg-overlay  ">
+      <div className=" flex justify-end gap-5 min-h-screen min-w-max bg-overlay  ">
         {/* Login Card */}
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className=" flex flex-col items-center gap-6  w-[800px]  p-8 shadow-lg ">
