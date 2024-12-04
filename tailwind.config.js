@@ -22,7 +22,8 @@ export default {
         DecenaryColor:"#f6fcff",
         lightGreen:"#ebf5fd",
         lightestRed:"#ffe6e6",
-        mediumRed:"#ff2323"
+        mediumRed:"#ff2323",
+        Shadesblack:"#232323"
 
       },
     },
