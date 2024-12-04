@@ -92,7 +92,7 @@ function Layout() {
     <div className="flex">
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full bg-Shadesblack hover:bg-secondaryColor shadow-lg z-50 transition-all duration-300 ${isSidebarOpen ? "w-64" : "w-16"} `}
+        className={`fixed top-0 left-0 h-full bg-Shadesblack  shadow-lg z-50 transition-all duration-300 ${isSidebarOpen ? "w-64" : "w-16"} `}
       >
         {/* Sidebar Header with Toggle Button */}
         <div className="flex items-center justify-between p-4  border-gray-700 ">
