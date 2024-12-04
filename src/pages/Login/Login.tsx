@@ -88,7 +88,7 @@ const Login = () => {
                 className="h-auto w-24"
               />
               <h1 className="text-2xl  mt-4 text-center ">
-                Management Information System
+                Account Management System
               </h1>
               <p className="text-lg ">For SDF</p>
             </div>
@@ -176,9 +176,9 @@ const Login = () => {
             </div>
 
             {/* Footer */}
-            <div className="mt-auto text-sm text-gray-400">
+            <div className=" text-sm text-gray-400 ml-40 mt-10">
               Designed & Developed by{" "}
-              <span className="font-bold text-xl text-white font-family: 'Berlin Sans FB'">
+              <span className="font-bold text-lg text-white font-family: 'Berlin Sans FB'">
                 Nanosoft
               </span>
             </div>
