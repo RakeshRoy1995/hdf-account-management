@@ -13,6 +13,7 @@ const useFetch = (url: any, options = {}) => {
   const [common_dataObj, setcommon_DataObj] = useState({});
   const [singleData, setsingleData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [addFormShow, setaddFormShow] = useState(false);
   const [error, setError] = useState<any>(null);
   const [deleteMsg, setdeleteMsg] = useState<any>(null);
   const [searchData, setsearchData] = useState<any>(null);
@@ -162,7 +163,7 @@ const useFetch = (url: any, options = {}) => {
     setLoading(false);
   };
 
-  return { data, setData, setsearchData, searchData, loading, error, fetchSingleDataCommonByID, setsingleData, singleData, fetchData, deleteData, deleteMsg, fetchDataCommon, fetchDataCommonObj, setcommon_Data, common_dataObj, common_data , fetchDataFromLocalStorage };
+  return { data, setData, setsearchData, searchData, addFormShow, setaddFormShow, loading, error, fetchSingleDataCommonByID, setsingleData, singleData, fetchData, deleteData, deleteMsg, fetchDataCommon, fetchDataCommonObj, setcommon_Data, common_dataObj, common_data , fetchDataFromLocalStorage };
 };
 
 export default useFetch;
