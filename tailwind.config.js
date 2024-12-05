@@ -23,8 +23,9 @@ export default {
         lightGreen:"#ebf5fd",
         lightestRed:"#ffe6e6",
         mediumRed:"#ff2323",
-        Shadesblack:"#232323"
-
+        Shadesblack:"#0F1014",
+        lightwhite:"#9a9cae",
+        strongwhite:"#f5f5f5"
       },
     },
   },
