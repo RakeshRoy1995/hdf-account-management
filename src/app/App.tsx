@@ -22,6 +22,7 @@ const Currency = React.lazy(
 import { submitFormData } from "@/api/Reqest";
 import Branch from "@/pages/GeneralSettings/Bank/Branch";
 import BankAccount from "@/pages/GeneralSettings/Bank/BankAccount";
+import DonorOrganization from "@/pages/configure/Donor Organization/DonorOrganization";
 
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
@@ -100,6 +101,7 @@ const App: FC = () => {
               <Route path="/account/income-statement" element={<Currency />} />
               <Route path="/account/balance-sheet" element={<Currency />} />
               <Route path="/account/cash-flow" element={<Currency />} />
+              <Route path="/account/financier" element={<DonorOrganization />} />
               {/* <Route path="/loan/loan-borrow-form" element={<LoanBorrowForm />} />
               <Route
                 path="/loan/deposite-product"

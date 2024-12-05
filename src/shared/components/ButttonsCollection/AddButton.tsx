@@ -9,9 +9,7 @@ const AddButton = ({setsingleData, loading}:any) => {
     (d: any) => d.name == "Create" && d.method == "POST",
   );
 
-  console.log(`tmpAddBtn`, tmpAddBtn);
-
-  const addButton = !tmpAddBtn?.checked == false ? false : true;
+  const addButton = tmpAddBtn?.checked == false ? false : true;
 
   return (
     <>
