@@ -499,7 +499,7 @@ export default function Menu({ isSidebarOpen }) {
   // console.log(`menu?.data`,menu?.data );
 
   return (
-    <ul className="w-full font-sans overflow-y-auto text-white">
+    <ul className="w-full font-sans overflow-y-auto text-lightwhite">
       {menu?.data?.map(
         (menu_data: any) =>
           menu_data?.checked && menu_data?.menuModuleIds?.includes(2) && (
@@ -508,7 +508,7 @@ export default function Menu({ isSidebarOpen }) {
                  (
                   <>
                     <li
-                      className={`cursor-pointer flex items-center p-3 gap-2 ${TargetOpen[menu_data?.name] ? "bg-secondaryColor text-white  text-base font-bold" : "hover:bg-secondaryColor hover:text-white  text-sm"}`}
+                      className={`cursor-pointer flex items-center p-3 gap-2 ${TargetOpen[menu_data?.name] ? " text-white  text-base font-bold" : " hover:text-white  text-sm"}`}
                       onClick={() =>
                         setTargetOpen((prev) => ({
                           ...prev,
@@ -547,7 +547,7 @@ export default function Menu({ isSidebarOpen }) {
                               <li
                                 key={submenu?.name}
                                 onClick={() => handleActive(submenu)}
-                                className={`w-full my-2 cursor-pointer border-l-2 ${activeItem === submenu?.name ? "border-l-secondaryColor text-secondaryColor font-base" : "border-transparent"}`}
+                                className={`w-full my-2 cursor-pointer border-l-2 pl-1 ${activeItem === submenu?.name ? "border-l-secondaryColor text-strongwhite  font-base" : "border-transparent hover:text-strongwhite"}`}
                               >
                                 <Link
                                   to={submenu?.route}
@@ -569,7 +569,7 @@ export default function Menu({ isSidebarOpen }) {
               ) : (
                 <Link
                   to={menu_data?.route}
-                  className={`cursor-pointer flex items-center p-3 gap-2 hover:bg-secondaryColor hover:text-white ${isSidebarOpen ? "" : ""}`}
+                  className={`cursor-pointer flex items-center p-3 gap-2  hover:text-white ${isSidebarOpen ? "" : ""}`}
                 >
                   <svg
                     width="20px"
