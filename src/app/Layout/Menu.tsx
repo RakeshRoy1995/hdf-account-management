@@ -502,7 +502,7 @@ export default function Menu({ isSidebarOpen }) {
     <ul className="w-full font-sans overflow-y-auto text-lightwhite">
       {menu?.data?.map(
         (menu_data: any) =>
-          menu_data?.checked && menu_data?.menuModuleIds?.includes(2) && (
+          menu_data?.checked && menu_data?.menuModuleIds?.includes(4) && (
             <li key={menu_data?.name}>
               {menu_data?.subMenu.length > 0 ? (
                  (

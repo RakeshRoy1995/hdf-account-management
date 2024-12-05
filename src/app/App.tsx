@@ -8,34 +8,21 @@ const Home = React.lazy(() => import("@/pages/Home/index"));
 const Login = React.lazy(() => import("@/pages/Login/Login"));
 const PrivateRoute = React.lazy(() => import("./PrivateRoute"));
 
-const OutreachCardsApply = React.lazy(
-  () => import("@/pages/LandingPage/OutreachCardsApply"),
-);
-const LayoutUser = React.lazy(() => import("./Layout/ui/LayoutUser"));
+const Bank = React.lazy(() => import( "@/pages/GeneralSettings/Bank/Bank"));
+const BankAdd = React.lazy(() => import( "@/pages/GeneralSettings/Bank/BankAdd"));
 const ParentGL = React.lazy(
   () => import("@/pages/chart-of-account/GL/ParentGL"),
 );
-const RolePermissionManagement = React.lazy(
-  () =>
-    import("@/pages/user/role-permission-management/RolePermissionManagement"),
-);
-const DepositProductType = React.lazy(
-  () =>
-    import(
-      "@/pages/LoanMgt/DepositProductService/DepositProductType/DepositProductType"
-    ),
-);
+
+
 const Currency = React.lazy(
   () => import("@/pages/LoanMgt/DepositProductService/Currency/Currency"),
 );
-const DepositeProduct = React.lazy(
-  () =>
-    import(
-      "@/pages/LoanMgt/DepositProductService/DepositeProduct/DepositeProduct"
-    ),
-);
+
 import { submitFormData } from "@/api/Reqest";
-import LoanBorrowForm from "@/pages/LoanMgt/DepositProductService/loan-borrow/LoanBorrowForm";
+import Branch from "@/pages/GeneralSettings/Bank/Branch";
+import BankAccount from "@/pages/GeneralSettings/Bank/BankAccount";
+
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
@@ -100,9 +87,10 @@ const App: FC = () => {
                 path="/loan/deposite-product-type"
                 element={<DepositProductType />}
               /> */}
-              <Route path="/account/bank" element={<Currency />} />
-              <Route path="/account/branch" element={<Currency />} />
-              <Route path="/account/bank-account" element={<Currency />} />
+              <Route path="/account/bank" element={<Bank />} />
+              <Route path="/bank-add" element={<BankAdd />} />
+              <Route path="/account/branch" element={<Branch />} />
+              <Route path="/account/bank-account" element={<BankAccount />} />
               <Route path="/account/cashbook" element={<Currency />} />
               <Route path="/account/voucher" element={<Currency />} />
               <Route path="/account/journel-voucher" element={<Currency />} />
