@@ -8,22 +8,36 @@ const Home = React.lazy(() => import("@/pages/Home/index"));
 const Login = React.lazy(() => import("@/pages/Login/Login"));
 const PrivateRoute = React.lazy(() => import("./PrivateRoute"));
 
-const Bank = React.lazy(() => import( "@/pages/GeneralSettings/Bank/Bank"));
-const BankAdd = React.lazy(() => import( "@/pages/GeneralSettings/Bank/BankAdd"));
+const Bank = React.lazy(() => import("@/pages/GeneralSettings/Bank/Bank"));
+const BankAdd = React.lazy(
+  () => import("@/pages/GeneralSettings/Bank/BankAdd"),
+);
 const ParentGL = React.lazy(
   () => import("@/pages/chart-of-account/GL/ParentGL"),
 );
-
 
 const Currency = React.lazy(
   () => import("@/pages/LoanMgt/DepositProductService/Currency/Currency"),
 );
 
-import { submitFormData } from "@/api/Reqest";
-import Branch from "@/pages/GeneralSettings/Bank/Branch";
-import BankAccount from "@/pages/GeneralSettings/Bank/BankAccount";
-import DonorOrganization from "@/pages/configure/Donor Organization/DonorOrganization";
+const Branch = React.lazy(() => import("@/pages/GeneralSettings/Bank/Branch"));
+const BankAccount = React.lazy(
+  () => import("@/pages/GeneralSettings/Bank/BankAccount"),
+);
+const DonorOrganization = React.lazy(
+  () => import("@/pages/configure/Donor Organization/DonorOrganization"),
+);
+const ProjectList = React.lazy(
+  () => import("@/pages/configure/ProjectSetup/ProjectList"),
+);
+const AddProjectSetup = React.lazy(
+  () => import("@/pages/configure/ProjectSetup/AddProjectSetup"),
+);
+const ProjectEdit = React.lazy(
+  () => import("@/pages/configure/ProjectSetup/ProjectEdit"),
+);
 
+import { submitFormData } from "@/api/Reqest";
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
@@ -79,10 +93,7 @@ const App: FC = () => {
                 path="/dashboard/role-permission"
                 element={<RolePermissionManagement />}
               /> */}
-              <Route
-                path="/account/chart-of-account"
-                element={<ParentGL />}
-              />
+              <Route path="/account/chart-of-account" element={<ParentGL />} />
 
               {/* <Route
                 path="/loan/deposite-product-type"
@@ -100,8 +111,22 @@ const App: FC = () => {
               <Route path="/account/trail-balance" element={<Currency />} />
               <Route path="/account/income-statement" element={<Currency />} />
               <Route path="/account/balance-sheet" element={<Currency />} />
-              <Route path="/account/cash-flow" element={<Currency />} />
-              <Route path="/account/financier" element={<DonorOrganization />} />
+              <Route path="/account/currency" element={<Currency />} />
+              <Route
+                path="/account/financier"
+                element={<DonorOrganization />}
+              />
+              <Route path="/account/project-info" element={<ProjectList />} />
+              <Route path="/account/project-setup-add" element={<AddProjectSetup />} />
+              <Route
+                path="/project-edit/:projectId"
+                element={<ProjectEdit />}
+              />
+
+              <Route
+                path="/account/financier"
+                element={<DonorOrganization />}
+              />
               {/* <Route path="/loan/loan-borrow-form" element={<LoanBorrowForm />} />
               <Route
                 path="/loan/deposite-product"

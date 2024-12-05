@@ -178,7 +178,7 @@ export const Currency = () => {
     }, [deleteMsg]);
     return (
         <>
-            <Breadcrumb name1={"Deposit Product Types"} name2={"Deposit Product Types"} />
+            <Breadcrumb name1={"Currency"} name2={"Currency"} />
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
