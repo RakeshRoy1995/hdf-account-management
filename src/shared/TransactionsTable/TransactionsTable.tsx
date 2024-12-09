@@ -1,4 +1,4 @@
-import React from 'react'
+
 const transactions = [
   // {
   //   type: "Project Payment",
@@ -60,58 +60,64 @@ export const TransactionsTable = () => {
 
   return (
 
-      <div className="p-6  min-h-screen rounded-md  lg:w-full xl:w-full md:min-w-min">
-        <div className="bg-white shadow-md rounded-lg sm:p-0 md:p-2 lg:p-6 xl:p-6">
-          <h1 className="text-xl font-semibold mb-4">Transaction History</h1>
-          <table className="table-auto md:w-1/2 lg:w-full xl:w-full border-collapse border border-gray-300 overflow-x-auto">
-            <thead className="bg-gray-100 ">
-              <tr className='text-sm'>
-                <th className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center text-gray-600  border-r-2 ">Transaction Type</th>
-                <th className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center text-gray-600 border-r-2">User Name</th>
-                <th className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center text-gray-600 border-r-2">Time</th>
-                <th className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center text-gray-600 border-r-2">Amount</th>
-                <th className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center text-gray-600 border-r-2">Status</th>
-                <th className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center text-gray-600 ">Action</th>
-              </tr>
-            </thead>
-            <tbody className='overflow-x-auto'>
-              {transactions.map((transaction, index) => (
-                <tr key={index} className="border-t">
-                  <td className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 border-r-2">
-                    <div className="flex items-center">
-                      <div className="bg-gray-200 p-2 rounded-full">
-                        {/* Icon Placeholder */}
-                        {/* <span className="text-sm text-gray-500">🗂️</span> */}
-                      </div>
-                      <div className="ml-2 text-sm">
-                        <p>{transaction.type}</p>
-                        {/* <p className="text-sm text-gray-500">{transaction.id}</p> */}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 border-r-2 md:text-xs">{transaction.user}</td>
-                  <td className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 border-r-2 md:text-xs">{transaction.time}</td>
-                  <td className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center border-r-2 md:text-xs">{transaction.amount}</td>
-                  <td className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center border-r-2 md:text-xs">
-                    <span
-                      className={`px-3 py-1 rounded-full  text-xs font-thin ${getStatusStyle(
-                        transaction.status
-                      )}`}
-                    >
-                      {transaction.status}
-                    </span>
-                  </td>
-                  <td className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center ">
-                    <button className=" hover:underline ">
-                      See Detail →
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <div className="p-6   rounded-md  lg:w-full xl:w-full md:min-w-min">
+      <div className="bg-white shadow-md rounded-lg sm:p-0 md:p-2 lg:p-6 xl:p-6">
+        <div className="flex justify-between items-center mb-5">
+          <h3 className="font-semibold text-gray-700 text-lg">Cashflow</h3>
+          <div className="flex items-center space-x-2">
+            <button className="text-sm bg-slate-50 text-gray-600 px-3 py-2 rounded-md drop-shadow-md">View More</button>
+
+          </div>
         </div>
+        <table className="table-auto md:w-1/2 lg:w-full xl:w-full border-collapse border border-gray-300 overflow-x-auto">
+          <thead className="bg-gray-100 ">
+            <tr className='text-sm'>
+              <th className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center text-gray-600  border-r-2 ">Transaction Type</th>
+              <th className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center text-gray-600 border-r-2">User Name</th>
+              <th className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center text-gray-600 border-r-2">Time</th>
+              <th className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center text-gray-600 border-r-2">Amount</th>
+              <th className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center text-gray-600 border-r-2">Status</th>
+              <th className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center text-gray-600 ">Action</th>
+            </tr>
+          </thead>
+          <tbody className='overflow-x-auto'>
+            {transactions.map((transaction, index) => (
+              <tr key={index} className="border-t">
+                <td className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 border-r-2">
+                  <div className="flex items-center">
+                    <div className="bg-gray-200 p-2 rounded-full">
+                      {/* Icon Placeholder */}
+                      {/* <span className="text-sm text-gray-500">🗂️</span> */}
+                    </div>
+                    <div className="ml-2 text-sm">
+                      <p>{transaction.type}</p>
+                      {/* <p className="text-sm text-gray-500">{transaction.id}</p> */}
+                    </div>
+                  </div>
+                </td>
+                <td className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 border-r-2 md:text-xs">{transaction.user}</td>
+                <td className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 border-r-2 md:text-xs">{transaction.time}</td>
+                <td className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center border-r-2 md:text-xs">{transaction.amount}</td>
+                <td className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center border-r-2 md:text-xs">
+                  <span
+                    className={`px-3 py-1 rounded-full  text-xs font-thin ${getStatusStyle(
+                      transaction.status
+                    )}`}
+                  >
+                    {transaction.status}
+                  </span>
+                </td>
+                <td className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center ">
+                  <button className=" hover:underline bg-secondaryColor text-QuinaryColor p-2 rounded-full text-xs">
+                    See Detail →
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
+    </div>
 
   )
 }
