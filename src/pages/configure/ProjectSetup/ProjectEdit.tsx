@@ -290,7 +290,6 @@ const donor_organization_List_API = async () => {
 useEffect(() => {
   donor_organization_List_API();
 }, []);
-console.log("Updated singleData:", singleData);
 
   return (
     <div className="w-full bg-[#f6fcff] ">
@@ -304,7 +303,7 @@ console.log("Updated singleData:", singleData);
         transition={{ duration: 0.5 }}
       >
 
-        <form className=" bg-white rounded-2xl p-5 space-y-5 " onSubmit={handleSubmit}>
+        <form className=" bg-white rounded-2xl p-5 drop-shadow-lg " onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-5">
             {/* Project Code */}
             <div className="flex flex-col relative ">

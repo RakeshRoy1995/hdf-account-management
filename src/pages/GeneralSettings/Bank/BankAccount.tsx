@@ -196,7 +196,7 @@ function BankAccount() {
       >
         <div className="p-5">
           {addFormShow && (
-            <form className="bg-white rounded-2xl p-5" onSubmit={handleSubmit}>
+            <form className="bg-white rounded-2xl p-5 drop-shadow-lg" onSubmit={handleSubmit}>
               {/* <p className="font-normal text-sm">Holiday ID:  <span className="text-primaryColor">2154UUHNGH</span></p> */}
               <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-4">
 
@@ -288,6 +288,64 @@ function BankAccount() {
                     <option
                       value="I"
                       selected={singleData?.accountType == "I"}
+                    >
+                      CURRENT
+                    </option>
+                  </select>
+                  <DropDownIcon />
+                </div>
+
+                {/* bankAccountGLId */}
+                <div className="flex flex-col relative ">
+                  <label
+                    htmlFor="bankAccountGLId"
+                    className="text-sm  absolute -mt-2 ml-4 mb-2 bg-white text-QuaternaryColor"
+                  >
+                    Bank Account GL
+                  </label>
+                  <select
+                    id="bankAccountGLId"
+                    name="bankAccountGLId"
+                    className="w-full border p-4 rounded appearance-none h-14"
+                  >
+                    <option
+                      value="A"
+                      selected={singleData?.bankAccountGLId == "A"}
+                    >
+                      Select{" "}
+                    </option>
+                    <option
+                      value="I"
+                      selected={singleData?.bankAccountGLId == "I"}
+                    >
+                      CURRENT
+                    </option>
+                  </select>
+                  <DropDownIcon />
+                </div>
+
+                {/* Bank Charge GL */}
+                <div className="flex flex-col relative ">
+                  <label
+                    htmlFor="bankChangeGLId"
+                    className="text-sm  absolute -mt-2 ml-4 mb-2 bg-white text-QuaternaryColor"
+                  >
+                    Bank Charge GL
+                  </label>
+                  <select
+                    id="bankChangeGLId"
+                    name="bankChangeGLId"
+                    className="w-full border p-4 rounded appearance-none h-14"
+                  >
+                    <option
+                      value="A"
+                      selected={singleData?.bankChangeGLId == "A"}
+                    >
+                      Select{" "}
+                    </option>
+                    <option
+                      value="I"
+                      selected={singleData?.bankChangeGLId == "I"}
                     >
                       CURRENT
                     </option>

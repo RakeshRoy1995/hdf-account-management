@@ -190,7 +190,7 @@ function BankAdd() {
       >
         <div className="p-5">
           {addFormShow && (
-            <form className="bg-white rounded-2xl p-5" onSubmit={handleSubmit}>
+            <form className="bg-white rounded-2xl p-5 drop-shadow-lg" onSubmit={handleSubmit}>
               {/* <p className="font-normal text-sm">Holiday ID:  <span className="text-primaryColor">2154UUHNGH</span></p> */}
               <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-4">
                 {/* Bank Name */}

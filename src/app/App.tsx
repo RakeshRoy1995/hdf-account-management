@@ -37,7 +37,14 @@ const ProjectEdit = React.lazy(
   () => import("@/pages/configure/ProjectSetup/ProjectEdit"),
 );
 
+const Accountingperiod = React.lazy(
+  () => import("@/pages/configure/Accounting-period/Accountingperiod"),
+);
+
 import { submitFormData } from "@/api/Reqest";
+import AddComponent from "@/pages/configure/Component/AddComponent";
+import TrailBalance from "@/pages/financial-report/Trail-balance/TrailBalance";
+// import Accountingperiod from "@/pages/configure/Accounting-period/Accountingperiod";
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
@@ -108,7 +115,7 @@ const App: FC = () => {
               <Route path="/account/journel-voucher" element={<Currency />} />
               <Route path="/account/payment-voucher" element={<Currency />} />
               <Route path="/account/receipt-voucher" element={<Currency />} />
-              <Route path="/account/trail-balance" element={<Currency />} />
+              <Route path="/account/trail-balance" element={<TrailBalance />} />
               <Route path="/account/income-statement" element={<Currency />} />
               <Route path="/account/balance-sheet" element={<Currency />} />
               <Route path="/account/currency" element={<Currency />} />
@@ -117,7 +124,10 @@ const App: FC = () => {
                 element={<DonorOrganization />}
               />
               <Route path="/account/project-info" element={<ProjectList />} />
-              <Route path="/account/project-setup-add" element={<AddProjectSetup />} />
+              <Route
+                path="/account/project-setup-add"
+                element={<AddProjectSetup />}
+              />
               <Route
                 path="/project-edit/:projectId"
                 element={<ProjectEdit />}
@@ -127,6 +137,18 @@ const App: FC = () => {
                 path="/account/financier"
                 element={<DonorOrganization />}
               />
+
+              <Route
+                path="/account/accounting-period"
+                element={<Accountingperiod />}
+              />
+
+              <Route
+                path="/account/opening-balance"
+                element={<Accountingperiod />}
+              />
+
+              <Route path="/account/component" element={<AddComponent />} />
               {/* <Route path="/loan/loan-borrow-form" element={<LoanBorrowForm />} />
               <Route
                 path="/loan/deposite-product"

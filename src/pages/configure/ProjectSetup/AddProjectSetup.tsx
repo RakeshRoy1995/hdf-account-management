@@ -255,7 +255,7 @@ const ProjectSetup = () => {
         <Breadcrumb name1={"Projects"} name2={"Project Setup"} />
 
         <form
-          className="bg-white rounded-2xl p-5 space-y-5 "
+          className="bg-white rounded-2xl p-5 drop-shadow-lg "
           onSubmit={handleSubmit}
         >
           <div className="grid grid-cols-2 gap-5">

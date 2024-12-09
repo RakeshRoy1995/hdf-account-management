@@ -162,7 +162,7 @@ function Bank() {
      
         <div className="'container mx-auto sm:max-w-screen-sm  md:max-w-screen-md lg:max-w-[1200px]  mb-10 rounded-2xl bg-white shadow-md '">
           <div className="p-5">
-            <form className="p-4 space-y-6" onSubmit={handleSubmit}>
+            <form className="bg-white rounded-2xl p-5 drop-shadow-lg" onSubmit={handleSubmit}>
               <input
                 type="hidden"
                 name="bankId"
