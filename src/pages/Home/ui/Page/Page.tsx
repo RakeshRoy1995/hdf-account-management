@@ -1,4 +1,7 @@
 import { submitFormData } from "@/api/Reqest";
+import { DashboardBarChart } from "@/shared/DashboardBarChart/DashboardBarChart";
+import { Cards } from "@/shared/DashboardCard/Cards";
+import { TransactionsTable } from "@/shared/TransactionsTable/TransactionsTable";
 import { permission_details } from "@/utils";
 import { FC, useEffect } from "react";
 
@@ -138,9 +141,49 @@ const Home: FC = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const cards = [
+    {
+      title: 'Balance',
+      amount: '321,010.18',
+      change: '25%',
+      isPositive: true,
+    },
+    {
+      title: 'Income',
+      amount: '78,301.15',
+      change: '12%',
+      isPositive: true,
+    },
+    {
+      title: 'Expense',
+      amount: '25,502.23',
+      change: '8%',
+      isPositive: false,
+    },
+    // {
+    //   title: 'Bill',
+    //   amount: '779.72',
+    //   change: '8%',
+    //   isPositive: true,
+    // },
+  ];
+
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Welcome to PKSF</h1>
+      <div className="md:w-full grid xs:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-5  p-6 ">
+      {cards.map((card, index) => (
+        <Cards
+          key={index}
+          title={card.title}
+          amount={card.amount}
+          change={card.change}
+          isPositive={card.isPositive}
+        />
+      ))}
+    </div>
+    <DashboardBarChart/>
+    <TransactionsTable/>
     </>
   );
 };

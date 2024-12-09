@@ -304,6 +304,24 @@ import { Link } from "react-router-dom";
 
 import { submitFormData } from "@/api/Reqest";
 import { permission_details } from "@/utils";
+import {
+  Chart as ChartJS,
+  BarElement,
+  LinearScale,
+  CategoryScale,
+  ArcElement,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+ChartJS.register(
+  LinearScale,
+  CategoryScale,
+  ArcElement,
+  BarElement,
+  Tooltip,
+  Legend
+);
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
