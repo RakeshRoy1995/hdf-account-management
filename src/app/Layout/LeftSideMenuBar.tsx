@@ -116,7 +116,7 @@ function Layout() {
 
       {/* Main Content Area */}
       <div className={`flex flex-col w-full ${isSidebarOpen ? "ml-64" : "ml-16"} transition-all duration-300`}>
-        <div className="container mx-auto">
+        <div className="container mx-auto p-5">
           <Outlet />
         </div>
       </div>

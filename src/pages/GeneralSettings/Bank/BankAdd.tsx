@@ -188,7 +188,7 @@ function BankAdd() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="p-5">
+        <div className="">
           {addFormShow && (
             <form className="bg-white rounded-2xl p-5 drop-shadow-lg" onSubmit={handleSubmit}>
               {/* <p className="font-normal text-sm">Holiday ID:  <span className="text-primaryColor">2154UUHNGH</span></p> */}

@@ -108,7 +108,7 @@ const App: FC = () => {
                 path="/loan/deposite-product-type"
                 element={<DepositProductType />}
               /> */}
-              <Route path="/account/bank" element={<Bank />} />
+              <Route path="/account/bank" element={<BankAdd />} />
               <Route path="/bank-add" element={<BankAdd />} />
               <Route path="/account/branch" element={<Branch />} />
               <Route path="/account/bank-account" element={<BankAccount />} />
@@ -123,7 +123,7 @@ const App: FC = () => {
               <Route path="/account/cash-bank" element={<TrailBalance />} />
               <Route path="/account/bank-book" element={<TrailBalance />} />
               <Route path="/account/trail-balance" element={<TrailBalance />} />
-              <Route path="/account/trail-balance" element={<TrailBalance />} />
+              <Route path="/account/dividend-rate" element={<TrailBalance />} />
               <Route path="/account/trail-balance" element={<TrailBalance />} />
               <Route path="/account/trail-balance" element={<TrailBalance />} />
               <Route path="/account/trail-balance" element={<TrailBalance />} />
