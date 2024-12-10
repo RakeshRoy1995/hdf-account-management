@@ -20,7 +20,7 @@ export const DashboardBarChart = () => {
         ],
     };
 
-    const barOptions = {
+    const barOptions :any = {
         responsive: true,
         plugins: {
             legend: {
@@ -48,7 +48,7 @@ export const DashboardBarChart = () => {
         ],
       };
 
-      const pieOptions = {
+      const pieOptions :any= {
         responsive: true,
         maintainAspectRatio: false, // Disable aspect ratio for custom sizing
         plugins: {

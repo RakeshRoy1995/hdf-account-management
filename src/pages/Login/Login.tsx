@@ -24,7 +24,7 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } :any= useForm();
 
   function setCookie(name, value, days) {
     let expires = "";

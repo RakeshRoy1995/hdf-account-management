@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useFetch from "@/hooks/useFetch";
 import { BreadcumbWithButton } from "@/shared/BreadcumbWithButton/BreadcumbWithButton";
 import Swal from "sweetalert2";
-import { groupBy, treeData_menu, treeData_roles } from "@/utils";
+import {treeData_roles } from "@/utils";
 import { get_all_data } from "@/api/Reqest";
 import SearchBtn from "@/shared/components/ButttonsCollection/SearchBtn";
 import RolePermissionTree from "./RolePermissionTree";

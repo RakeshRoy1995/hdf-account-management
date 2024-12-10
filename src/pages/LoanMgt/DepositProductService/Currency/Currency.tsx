@@ -236,7 +236,7 @@ export const Currency = () => {
                                 placeholder="Write currencySymbol"
                                 className="border p-4 rounded-md h-14 text-sm"
                                 defaultValue={singleData?.currencySymbol}
-                                onInput={(e) => {
+                                onInput={(e:any) => {
                                     const validSymbols = ['$', '€', '£', '¥', '₹', '₣', '₺', '₱', '৳']; // Add more symbols as needed
                                     const inputValue = e.target.value;
 

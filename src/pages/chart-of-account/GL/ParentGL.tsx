@@ -1,18 +1,14 @@
 import { RichTreeView } from "@mui/x-tree-view/RichTreeView";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
-import { BreadcumbWithButton } from "@/shared/BreadcumbWithButton/BreadcumbWithButton";
 import Swal from "sweetalert2";
 import { useEffect, useRef, useState } from "react";
 import useFetch from "@/hooks/useFetch";
 import { get_all_data, submitFormData } from "@/api/Reqest";
-import CreateUpdateBtn from "@/shared/components/ButttonsCollection/CreateUpdateBtn";
 import { useTreeViewApiRef } from "@mui/x-tree-view/hooks";
 import { TreeItem, treeItemClasses } from "@mui/x-tree-view/TreeItem";
 import { styled } from "@mui/material/styles";
 import { SvgIcon, SvgIconProps } from "@mui/material";
-import dataTree from "./data.json";
-import AddButton from "@/shared/components/ButttonsCollection/AddButton";
 import UpdateButtonGL from "@/shared/components/ButttonsCollection/UpdateButtonGL";
 import Breadcrumb from "@/shared/Breadcumb/Breadcrumb";
 import CreateButton from "@/shared/components/ButttonsCollection/CreateButton";
@@ -41,12 +37,11 @@ export default function ParentGL() {
   const [currencie, setcurrencie] = useState<any>([]);
 
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const [items, setitems] = useState<string[]>({});
   const toggledItemRef = useRef<{ [itemId: string]: boolean }>({});
   const apiRef = useTreeViewApiRef();
 
   const [show, setshow] = useState(false);
-  const [parentName, setparentName] = useState("");
+  const [parentName, setparentName] = useState<any>("");
   const [generatedAcNo, setgeneratedAcNo] = useState("");
   const [addMode, setaddMode] = useState(false);
   const {
@@ -201,15 +196,12 @@ export default function ParentGL() {
     Object.entries(toggledItemRef.current).forEach(([itemId, isSelected]) => {
       const item = apiRef.current!.getItem(itemId);
       if (isSelected) {
-        setitems(item);
         setgeneratedAcNo("")
         setparentName(item?.glAccountNo);
         setsearchData(item);
         setshow(true);
         setaddMode(false);
-      } else {
-        setitems(null);
-      }
+      } 
     });
     toggledItemRef.current = {};
   };
