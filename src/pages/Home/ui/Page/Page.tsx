@@ -171,6 +171,7 @@ const Home: FC = () => {
 
   return (
     <>
+    <div className="h-screen">
       <div className="md:w-full grid xs:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-5  p-6 ">
       {cards.map((card, index) => (
         <Cards
@@ -184,6 +185,7 @@ const Home: FC = () => {
     </div>
     <DashboardBarChart/>
     <TransactionsTable/>
+    </div>
     </>
   );
 };

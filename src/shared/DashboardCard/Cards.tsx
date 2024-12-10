@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { useSpring, animated } from '@react-spring/web';
 
 export const Cards = ({ title, amount, change, isPositive }) => {
