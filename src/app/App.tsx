@@ -44,6 +44,8 @@ const Accountingperiod = React.lazy(
 import { submitFormData } from "@/api/Reqest";
 import AddComponent from "@/pages/configure/Component/AddComponent";
 import TrailBalance from "@/pages/financial-report/Trail-balance/TrailBalance";
+import ChargeInEquity from "@/pages/financial-report/Charge-in-equity/ChargeInEquity";
+import LedgerInformation from "@/pages/financial-report/ledger-information/LedgerInformation";
 // import Accountingperiod from "@/pages/configure/Accounting-period/Accountingperiod";
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
@@ -115,6 +117,15 @@ const App: FC = () => {
               <Route path="/account/journel-voucher" element={<Currency />} />
               <Route path="/account/payment-voucher" element={<Currency />} />
               <Route path="/account/receipt-voucher" element={<Currency />} />
+              <Route path="/account/trail-balance" element={<TrailBalance />} />
+              <Route path="/account/changes-equity" element={<ChargeInEquity />} />
+              <Route path="/account/ledger-information" element={<LedgerInformation />} />
+              <Route path="/account/cash-bank" element={<TrailBalance />} />
+              <Route path="/account/bank-book" element={<TrailBalance />} />
+              <Route path="/account/trail-balance" element={<TrailBalance />} />
+              <Route path="/account/trail-balance" element={<TrailBalance />} />
+              <Route path="/account/trail-balance" element={<TrailBalance />} />
+              <Route path="/account/trail-balance" element={<TrailBalance />} />
               <Route path="/account/trail-balance" element={<TrailBalance />} />
               <Route path="/account/income-statement" element={<Currency />} />
               <Route path="/account/balance-sheet" element={<Currency />} />
