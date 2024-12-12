@@ -107,7 +107,7 @@ function Layout() {
         </div>
 
         {/* Sidebar Content */}
-        <div className="flex flex-col justify-between h-full py-2">
+        <div className="flex flex-col justify-between h-full py-2 ">
           <div className="px-4">
             <Menu isSidebarOpen={isSidebarOpen} />
           </div>
