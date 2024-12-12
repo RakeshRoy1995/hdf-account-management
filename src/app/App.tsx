@@ -8,7 +8,6 @@ const Home = React.lazy(() => import("@/pages/Home/index"));
 const Login = React.lazy(() => import("@/pages/Login/Login"));
 const PrivateRoute = React.lazy(() => import("./PrivateRoute"));
 
-const Bank = React.lazy(() => import("@/pages/GeneralSettings/Bank/Bank"));
 const BankAdd = React.lazy(
   () => import("@/pages/GeneralSettings/Bank/BankAdd"),
 );
