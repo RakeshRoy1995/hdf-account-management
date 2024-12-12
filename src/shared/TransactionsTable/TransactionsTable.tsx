@@ -69,12 +69,12 @@ export const TransactionsTable = () => {
 
           </div>
         </div>
-        <table className="table-auto md:w-1/2 lg:w-full xl:w-full border-collapse border border-gray-300 overflow-x-auto">
+        <table className="table-auto md:w-full lg:w-full xl:w-full border-collapse border border-gray-300 overflow-x-auto">
           <thead className="bg-gray-100 ">
             <tr className='text-sm'>
               <th className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center text-gray-600  border-r-2 ">Transaction Type</th>
               <th className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center text-gray-600 border-r-2">User Name</th>
-              <th className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center text-gray-600 border-r-2">Time</th>
+
               <th className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center text-gray-600 border-r-2">Amount</th>
               <th className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center text-gray-600 border-r-2">Status</th>
               <th className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center text-gray-600 ">Action</th>
@@ -96,7 +96,7 @@ export const TransactionsTable = () => {
                   </div>
                 </td>
                 <td className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 border-r-2 md:text-xs">{transaction.user}</td>
-                <td className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 border-r-2 md:text-xs">{transaction.time}</td>
+
                 <td className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center border-r-2 md:text-xs">{transaction.amount}</td>
                 <td className="xs:p-1 sm:1 md:px-1 md:py-1 lg:px-4 lg:py-2 xl:px-4 xl:py-2 text-center border-r-2 md:text-xs">
                   <span

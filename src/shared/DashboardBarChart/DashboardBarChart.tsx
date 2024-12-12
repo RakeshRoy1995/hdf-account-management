@@ -62,7 +62,7 @@ export const DashboardBarChart = () => {
 
             <div className="flex xs:flex-wrap sm:flex-wrap md:flex-wrap lg:flex-wrap xl:flex-nowrap  p-6 gap-6 items-stretch">
                 {/* Bar Chart */}
-                <div className="bg-white shadow-md rounded-lg p-4 w-full md:w-2/3 lg:w-full ">
+                <div className="bg-white shadow-md rounded-lg p-4 w-full md:w-full lg:w-full ">
                     <div className="flex justify-between items-center">
                         <h3 className="font-semibold text-gray-700 text-lg">Cashflow</h3>
                         <div className="flex items-center space-x-2">
@@ -88,7 +88,7 @@ export const DashboardBarChart = () => {
                 </div>
 
                 {/* Pie Chart */}
-                <div className="bg-white shadow-md rounded-lg p-4 w-full md:w-2/3 lg:w-full ">
+                <div className="bg-white shadow-md rounded-lg p-4 w-full md:w-full lg:w-full ">
                 <div className="flex justify-between items-center">
                         <h3 className="font-semibold text-gray-700 text-lg">Cashflow</h3>
                         <div className="flex items-center space-x-2">
