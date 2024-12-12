@@ -9,7 +9,7 @@ export const Cards = ({ title, amount, change, isPositive }) => {
     config: { tension: 170, friction: 26 }, // Customize animation speed
   });
   return (
-    <div className="flex flex-col bg-white shadow-md rounded-lg p-4 xs:w-3/4 lg:w-full md:w-1/2 xl:w-full">
+    <div className="flex flex-col bg-white shadow-md rounded-lg p-4 xs:w-3/4 lg:w-full md:w-full xl:w-full">
     <div className="flex justify-between items-center">
       <div className="flex items-center space-x-2">
         <div className="bg-purple-100 p-2 rounded-md">

@@ -79,7 +79,7 @@ const Login = () => {
       <div className=" flex justify-end gap-5 min-h-screen min-w-max bg-overlay  ">
         {/* Login Card */}
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className=" flex flex-col items-center gap-6  w-[800px]  p-8 shadow-lg ">
+          <div className=" flex flex-col items-center gap-6  xs:w-[600px] sm:w-[600px] md:w-[800px] lg:w-[800px] xl:w-[800px]  xs:p-0 md:p-8 lg:p-8 xl:p-8 shadow-lg ">
             {/* Logo */}
             <div className="flex flex-col items-center text-white font-bold pt-24 pl-44">
               <img
@@ -94,7 +94,7 @@ const Login = () => {
             </div>
 
             {/* Input Fields */}
-            <div className="w-full max-w-sm text-white  ml-40">
+            <div className="xs:w-[400px] md:w-[500px] lg:w-[500px] xl:w-[500px] text-white  xs:ml-44 md:ml-40 lg:ml-40 xl:ml-40">
               {/* Username Field */}
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-1">
@@ -119,7 +119,7 @@ const Login = () => {
               </div>
 
               {/* Password Field */}
-              <div className="mb-4">
+              <div className="mb-4 relative">
                 <label className="block text-sm font-medium mb-1">
                   Password
                 </label>
@@ -136,12 +136,12 @@ const Login = () => {
                   {showPassword ? (
                     <FaRegEyeSlash
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute mt-6 right-3 text-black cursor-pointer"
+                      className="absolute mt-6 right-3 text-black cursor-pointer "
                     />
                   ) : (
                     <FaRegEye
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute mt-6 right-3 text-black cursor-pointer"
+                      className="absolute mt-1 right-3 text-black cursor-pointer"
                     />
                   )}
                   {errors.password && (
