@@ -41,11 +41,21 @@ const Accountingperiod = React.lazy(
   () => import("@/pages/configure/Accounting-period/Accountingperiod"),
 );
 
+const PaymentVoucher = React.lazy(
+  () => import("@/pages/voucher/PaymentVoucher"),
+);
+
+const AddComponent = React.lazy(
+  () => import("@/pages/configure/Component/AddComponent"),
+);
+
 import { submitFormData } from "@/api/Reqest";
-import AddComponent from "@/pages/configure/Component/AddComponent";
 import TrailBalance from "@/pages/financial-report/Trail-balance/TrailBalance";
 import ChargeInEquity from "@/pages/financial-report/Charge-in-equity/ChargeInEquity";
 import LedgerInformation from "@/pages/financial-report/ledger-information/LedgerInformation";
+import RecitVoucher from "@/pages/voucher/RecitVoucher";
+import JournelVoucher from "@/pages/voucher/JournelVoucher";
+// import PaymentVoucher from "@/pages/voucher/PaymentVoucher";
 // import Accountingperiod from "@/pages/configure/Accounting-period/Accountingperiod";
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
@@ -114,10 +124,10 @@ const App: FC = () => {
               <Route path="/account/bank-account" element={<BankAccount />} />
               <Route path="/account/cashbook" element={<Currency />} />
               <Route path="/account/voucher" element={<Currency />} />
-              <Route path="/account/journel-voucher" element={<Currency />} />
-              <Route path="/account/payment-voucher" element={<Currency />} />
+              <Route path="/account/journel-voucher" element={<JournelVoucher />} />
+              <Route path="/account/payment-voucher" element={<PaymentVoucher />} />
               <Route path="/account/receipt-voucher" element={<Currency />} />
-              <Route path="/account/trail-balance" element={<TrailBalance />} />
+              <Route path="/account/trail-balance" element={<RecitVoucher />} />
               <Route path="/account/changes-equity" element={<ChargeInEquity />} />
               <Route path="/account/ledger-information" element={<LedgerInformation />} />
               <Route path="/account/cash-bank" element={<TrailBalance />} />
