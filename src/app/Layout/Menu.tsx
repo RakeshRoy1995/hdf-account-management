@@ -587,7 +587,7 @@ export default function Menu({ isSidebarOpen }) {
               ) : (
                 <Link
                   to={menu_data?.route}
-                  className={`cursor-pointer flex items-center p-3 gap-2  hover:text-white ${isSidebarOpen ? "" : ""}`}
+                  className={`cursor-pointer flex items-center  gap-2  hover:text-white ${isSidebarOpen ? "" : ""}`}
                 >
                   <svg
                     width="20px"

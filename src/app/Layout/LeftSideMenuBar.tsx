@@ -112,7 +112,7 @@ function Layout() {
         <div className="flex items-center justify-between p-4 border-gray-700">
           <h2
             className={`text-QuinaryColor text-lg font-semibold ${
-              isSidebarOpen ? "block" : "hidden xs:block sm:block md:hidden lg:hidden xl:hidden"
+              isSidebarOpen ? "block" : "hidden xs:hidden sm:block md:hidden lg:hidden xl:hidden"
             }`}
           >
             MENU
