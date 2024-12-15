@@ -183,6 +183,53 @@ function Branch() {
         {/* <p className="font-normal text-sm">Holiday ID:  <span className="text-primaryColor">2154UUHNGH</span></p> */}
         <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-4">
           {/* Date */}
+
+
+          <div className="flex flex-col relative ">
+          <label
+            htmlFor="implementingMinistry"
+            className="text-sm  absolute -mt-2 ml-4 mb-2 bg-white text-QuaternaryColor"
+          >
+            Status
+          </label>
+          <select
+            id="implementingMinistry"
+            name="bankRecStatus"
+            // value={implementingMinistry}
+            // onChange={(e) => setImplementingMinistry(e.target.value)}
+            className="w-1/4 border p-4 rounded appearance-none h-14"
+          >
+            <option
+              value="A"
+              selected={singleData?.bankRecStatus == "A"}
+            >
+              Active{" "}
+            </option>
+            <option
+              value="I"
+              selected={singleData?.bankRecStatus == "I"}
+            >
+              Inactive
+            </option>
+          </select>
+          <div className="absolute inset-y-0 left-0 flex items-start px-2 pointer-events-none ml-56 mt-5">
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 22 22"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2.59028 7.37727L3.53006 6.4375L10.8152 13.7226L18.1003 6.4375L19.04 7.37727L10.8152 15.6021L2.59028 7.37727Z"
+                fill="#5F6368"
+              />
+            </svg>
+          </div>
+        </div>
+
+
+        
           {/* <div className="flex flex-col relative">
             <label
               htmlFor="dateOfSigning"

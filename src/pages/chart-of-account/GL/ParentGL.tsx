@@ -234,7 +234,7 @@ export default function ParentGL() {
       <Breadcrumb name1={"GL"} name2={"GL Account"} url={"#"} />
 
       <form className="" onSubmit={handleSubmit}>
-        {user?.user?.organizationType ? (
+        {user?.user?.organizationLevelId < 3 ? (
           <div className="bg-white rounded-xl shadow-md p-4">
             <div className="grid grid-rows-2 grid-flow-col gap-4 mt-5">
               <div className="row-span-1">
