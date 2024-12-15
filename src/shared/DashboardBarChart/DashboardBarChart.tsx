@@ -60,10 +60,10 @@ export const DashboardBarChart = () => {
 
     return (
 
-            <div className="flex xs:flex-wrap sm:flex-wrap md:flex-wrap lg:flex-wrap xl:flex-nowrap  p-6 gap-6 items-stretch">
+            <div className="flex xs:flex-wrap sm:flex-wrap md:flex-wrap lg:flex-wrap xl:flex-nowrap  xs:ml-6 lg:ml-0 md:ml-0 xl:ml-0  xs:p-0 lg:p-6 md:p-6 xl:p-6 gap-2 xs:w-2/3 md:w-full lg:w-full xl:w-full items-stretch">
                 {/* Bar Chart */}
-                <div className="bg-white shadow-md rounded-lg p-4 w-full md:w-full lg:w-full ">
-                    <div className="flex justify-between items-center">
+                <div className="bg-white shadow-md rounded-lg p-4 w-full  md:w-full lg:w-full xl:w-full ">
+                    <div className="flex xs:flex-col md:flex-row lg:flex-row xl:flex-row  justify-between items-center">
                         <h3 className="font-semibold text-gray-700 text-lg">Cashflow</h3>
                         <div className="flex items-center space-x-2">
                             <button className="text-sm bg-slate-50 text-gray-600 px-3 py-2 rounded-md drop-shadow-md">Last 6 Months</button>
@@ -89,7 +89,7 @@ export const DashboardBarChart = () => {
 
                 {/* Pie Chart */}
                 <div className="bg-white shadow-md rounded-lg p-4 w-full md:w-full lg:w-full ">
-                <div className="flex justify-between items-center">
+                <div className="flex xs:flex-col md:flex-row lg:flex-row xl:flex-row  justify-between items-center ">
                         <h3 className="font-semibold text-gray-700 text-lg">Cashflow</h3>
                         <div className="flex items-center space-x-2">
                             <button className="text-sm bg-slate-50 text-gray-600 px-3 py-2 rounded-md drop-shadow-md">Last 6 Months</button>
