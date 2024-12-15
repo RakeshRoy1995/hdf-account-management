@@ -41,7 +41,7 @@ const Navbar: React.FC = () => {
       <nav className="max-w-full flex items-center justify-between p-4 bg-Shadesblack shadow">
         <Link to={"/admin"}>
 
-          <div className="flex items-center ml-16">
+          <div className="flex items-center ml-10">
           <img
                 src={logo} // Replace with the actual logo path
                 alt="SDF Logo"
