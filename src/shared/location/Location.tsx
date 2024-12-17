@@ -18,37 +18,46 @@ export default function Location({ singleData, setsingleData }: any) {
 
   const divisionId =
     singleData?.location?.divisionId ||
+    singleData?.address?.divisionId ||
     singleData?.personal_info?.presentAddress?.divisionId ||
     singleData?.presentAddress?.divisionId;
   const districtId =
     singleData?.location?.districtId ||
+    singleData?.address?.districtId ||
     singleData?.personal_info?.presentAddress?.districtId ||
     singleData?.presentAddress?.districtId;
   const upazilaId =
     singleData?.location?.upazilaId ||
+    singleData?.address?.upazilaId ||
     singleData?.personal_info?.presentAddress?.upazilaId ||
     singleData?.presentAddress?.upazilaId;
   const villageName =
     singleData?.location?.villageName ||
+    singleData?.address?.villageName ||
     singleData?.personal_info?.presentAddress?.villageName ||
     singleData?.presentAddress?.villageName;
   const cityCorporationId =
     singleData?.location?.cityCorporationId ||
+    singleData?.address?.cityCorporationId ||
     singleData?.personal_info?.presentAddress?.cityCorporationId ||
     singleData?.presentAddress?.cityCorporationId;
   const postCode =
     singleData?.location?.postCode ||
+    singleData?.address?.postCode ||
     singleData?.personal_info?.presentAddress?.postCode ||
     singleData?.presentAddress?.postCode;
   const address =
     singleData?.location?.address ||
+    singleData?.address?.address ||
     singleData?.personal_info?.presentAddress?.address ||
     singleData?.presentAddress?.address;
   const wardName =
     singleData?.location?.wardName ||
+    singleData?.address?.wardName ||
     singleData?.personal_info?.permanentAddress?.wardName ||
     singleData?.permanentAddress?.wardName;
 
+  console.log(`post`, postCode);
   useEffect(() => {
     const allDivision = JSON.parse(localStorage.getItem("division_list"));
     setDivisions(allDivision);
@@ -220,7 +229,7 @@ export default function Location({ singleData, setsingleData }: any) {
             <input
               id="villageName"
               type="text"
-              placeholder="postal Code"
+              placeholder="Village"
               name="location.villageName"
               value={villageName || villageName}
               onChange={(e) => {
@@ -236,7 +245,7 @@ export default function Location({ singleData, setsingleData }: any) {
           {/* postCode */}
           <div className="relative">
             <label className="block text-sm font-medium text-gray-700 absolute -mt-1 ml-4 bg-white">
-              Post Code
+              Post Code f
             </label>
 
             <input
