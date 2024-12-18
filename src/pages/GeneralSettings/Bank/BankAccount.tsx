@@ -3,7 +3,7 @@ import useFetch from "@/hooks/useFetch";
 import AddButton from "@/shared/components/ButttonsCollection/AddButton";
 import Table from "@/shared/Table/Table";
 import Swal from "sweetalert2";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { col_value } from "@/shared/Table/utils";
 import ActionButton from "@/shared/Table/ActionButton";
 import UpdateButton from "@/shared/components/ButttonsCollection/UpdateButton";
@@ -145,11 +145,6 @@ function BankAccount() {
       fetchData();
     }
   }, [deleteMsg]);
-  // console.log(`data`, data, loading, error);
-  // console.log(`common_data`, singleData);
-
-
-
 
   const branchName = (id: any) => {
     const branch_name = branch.find((bnk: any) => bnk.bankBranchId == id);
@@ -257,7 +252,14 @@ function BankAccount() {
     user_list_api();
   }, []);
 
-  console.log(`user`, user , singleData);
+  const selectRef = useRef(null);
+
+  const handleClear = () => {
+    if (selectRef.current) {
+      setsingleData({ ...singleData, ["signatoryUserIds"]: null });
+      selectRef.current.clearValue(); // Clears the selected value
+    }
+  };
 
   return (
     <>
@@ -494,31 +496,57 @@ function BankAccount() {
                 </div>
 
 
-                {/* <div className="flex flex-col relative">
+                <div className="flex flex-col relative">
                   <label
                     htmlFor="signatoryUserId"
-                    className="z-10 text-sm absolute mt-2 ml-6 -mb-4 bg-white text-QuaternaryColor"
+                    className="text-sm absolute -mt-2 z-10 ml-3 mb-2 bg-white"
                   >
                     Signatory User
+                    {singleData?.signatoryUserIds && singleData?.signatoryUserIds.length > 0 && (
+                      <button
+                        type="button"
+                        className="text-red-600 mx-1"
+                        onClick={handleClear}
+                      >
+                        Clear
+                      </button>
+                    )}
                   </label>
                   <Select
+                    ref={selectRef}
                     isMulti
-                    name="signatoryUserId"
+                    isClearable
+                    name="signatoryUserIds"
                     onChange={(e: any) => {
+                      const signatoryUserIds = e.map((obj: any) => obj.value);
                       setsingleData({
                         ...singleData,
-                        ["signatoryUserId"]: e.value,
+                        ["signatoryUserIds"]: signatoryUserIds,
                       });
                     }}
-                    className=" p-4 rounded-md h-14 text-sm"
+                    styles={{
+                      container: (provided) => ({
+                        ...provided,
+                        width: "100%", // Set the width you want
+                      }),
+                      control: (provided) => ({
+                        ...provided,
+                        minHeight: "55px", // Set the minimum height you want
+                      }),
+                    }}
+
                     value={user?.map((m_d: any) => {
-                      if (singleData?.signatoryUserId.includes(m_d.userId)) {
+                      console.log(`signatoryUserIdsdddddd`, singleData?.signatoryUserIds , m_d.userId);
+                      if (singleData?.signatoryUserIds && singleData?.signatoryUserIds == m_d.userId) {
+                        
                         return {
                           label: m_d.name,
                           value: m_d.userId,
                         };
                       }
                     })}
+
+                    placeholder="Select Signatory User"
                     options={user?.map((m_d: any) => {
                       return {
                         label: m_d.name,
@@ -526,7 +554,7 @@ function BankAccount() {
                       };
                     })}
                   />
-                </div> */}
+                </div>
               </div>
 
               <div className="flex justify-end gap-4 mt-10">

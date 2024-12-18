@@ -1,176 +1,202 @@
-import React, { useState } from "react";
+import { BreadcumbWithButton } from '@/shared/BreadcumbWithButton/BreadcumbWithButton';
+import Table from '@/shared/Table/Table';
+import Swal from "sweetalert2";
+import React, { useEffect } from 'react'
+import useFetch from '@/hooks/useFetch';
+import UpdateButton from '@/shared/components/ButttonsCollection/UpdateButton';
+import AddButton from '@/shared/components/ButttonsCollection/AddButton';
+import { col_value } from '@/shared/Table/utils';
+import ActionButton from '@/shared/Table/ActionButton';
+import Breadcrumb from '@/shared/Breadcumb/Breadcrumb';
+import PaymentVoucherForm from './payment-voucher/PaymentVoucherForm';
 
-const PaymentVoucher = () => {
-  const [rows, setRows] = useState([
-    { accountCode: "12345", description: "testing", dimension: "007/2024 Supplier one", debit: "111.00", credit: "1111", memo: "" },
-    { accountCode: "1101", description: "cash", dimension: "", debit: "", credit: "11.00", memo: "" }
-  ]);
 
-  const [newRow, setNewRow] = useState({
-    accountCode: "",
-    description: "",
-    dimension: "",
-    debit: "",
-    credit: "",
-    memo: ""
-  });
+const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
+const token = localStorage.getItem("token");
 
-  const handleAddRow = () => {
-    setRows([...rows, newRow]);
-    setNewRow({ accountCode: "", description: "", dimension: "", debit: "", credit: "", memo: "" });
+function BankAdd() {
+  const {
+    data,
+    loading,
+    error,
+    fetchData,
+    deleteData,
+    deleteMsg,
+    common_data,
+    fetchDataCommon,
+    setcommon_Data,
+    fetchSingleDataCommonByID,
+    setsingleData,
+    singleData,
+    addFormShow,
+    setaddFormShow
+  } = useFetch(`${API_URL}/banks`);
+
+  const fetchDataByID = async (id: any, type = "") => {
+    if (type == "edit") {
+      const page_list = `${API_URL}/banks/${id}`;
+      const options = {
+        method: "get",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      fetchSingleDataCommonByID(page_list, options);
+    }
+    if (type == "delete") {
+      const page_list = `${API_URL}/banks/${id}`;
+      deleteData(page_list);
+    }
+    setaddFormShow(true);
   };
 
-  const handleDeleteRow = (index) => {
-    const updatedRows = rows.filter((_, i) => i !== index);
-    setRows(updatedRows);
+  const fetchInitData = async () => {
+    fetchData();
   };
 
-  const handleInputChange = (e, field) => {
-    setNewRow({ ...newRow, [field]: e.target.value });
+  useEffect(() => {
+    fetchInitData();
+  }, []);
+
+  useEffect(() => {
+    if (common_data) {
+      //show success message
+      Swal.fire({
+        icon: "success",
+        text: "Success",
+        confirmButtonText: "Close",
+      });
+      setaddFormShow(false);
+      setcommon_Data(null);
+      fetchData();
+    }
+
+    if (error) {
+      //show error message
+      Swal.fire({
+        icon: "error",
+        text: error?.data?.message,
+        confirmButtonText: "Close",
+      });
+    }
+  }, [error?.data?.timestamp, common_data, error]);
+
+
+  useEffect(() => {
+    if (deleteMsg) {
+      //show success message
+      setcommon_Data(null);
+      fetchData();
+    }
+  }, [deleteMsg]);
+
+
+
+
+  const column = [
+    {
+      name: "Bank Name",
+      selector: (row: any) => row.bankName,
+      sortable: true,
+    },
+    {
+      name: "Bank Description",
+      selector: (row: any) => row.bankDescription,
+      sortable: true,
+    },
+
+    {
+      name: "Status",
+      selector: (row: any) => row.bankRecStatus,
+      cell: (row: any) => <>{col_value(row.bankRecStatus)}</>,
+      conditionalCellStyles: [
+        {
+          when: row => row.bankRecStatus == "A",
+          style: row => ({ color: "green" }),
+        },
+
+        {
+          when: row => row.bankRecStatus !== "A",
+          style: row => ({ color: "red" }),
+        },
+      ],
+      sortable: true,
+    },
+
+    {
+      name: "action",
+      cell: (row: any) => <>{ActionButton(fetchDataByID, row?.bankId)}</>,
+    },
+  ];
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    const authToken = localStorage.getItem("customer_login_auth") || "";
+const token: any = authToken ? JSON.parse(authToken) : "";
+
+
+    const formData = new FormData(e.target);
+    let obj: any = {
+      partnerOrganizationId : token?.user?.partnerOrganizationId || null,
+      branchId : token?.user?.branchId || null,
+    };
+    for (const [key, value] of formData) {
+      console.log(key, ":", value);
+      obj = { ...obj, [key]: value };
+    }
+
+    let page_list = `${API_URL}/banks`;
+    let method = "POST";
+
+    if (singleData?.bankId) {
+      page_list = `${API_URL}/banks/${singleData?.bankId}`;
+      method = "PUT";
+    }
+    const options = {
+      method,
+      data: obj,
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    fetchDataCommon(page_list, options);
   };
 
   return (
-    <div className="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Journal Entry</h2>
+    <div>
+      {addFormShow ? (
+        <Breadcrumb name1={"Payment Voucher"} name2={"Payment Voucher Setup"} />
+      ) : (
+        <BreadcumbWithButton
+          name={"Payment Voucher"}
+          url={"#"}
+          setaddFormShow={setaddFormShow}
+        />
+      )}
 
-      {/* Form Fields */}
-      <div className="grid grid-cols-2 gap-6 mb-6">
-        <div>
-          <label className="block font-semibold mb-1">Journal Date:</label>
-          <input type="date" defaultValue="2022-12-31" className="w-full p-2 border rounded" />
-        </div>
-        <div>
-          <label className="block font-semibold mb-1">Document Date:</label>
-          <input type="date" defaultValue="2024-12-15" className="w-full p-2 border rounded" />
-        </div>
-        <div>
-          <label className="block font-semibold mb-1">Currency:</label>
-          <select className="w-full p-2 border rounded">
-            <option>Rand</option>
-          </select>
-        </div>
-        <div>
-          <label className="block font-semibold mb-1">Exchange Rate:</label>
-          <input type="number" defaultValue="1.000" className="w-full p-2 border rounded" />
-        </div>
-        <div>
-          <label className="block font-semibold mb-1">Reference:</label>
-          <input type="text" defaultValue="416/2022" className="w-full p-2 border rounded" />
-        </div>
-        <div>
-          <label className="block font-semibold mb-1">Quick Entry:</label>
-          <input type="number" defaultValue="12" className="w-full p-2 border rounded" />
-        </div>
-      </div>
+      {addFormShow && (
+        <form className="bg-white rounded-2xl p-2 drop-shadow-lg mb-5" onSubmit={handleSubmit}>
+        <PaymentVoucherForm />
+        {
+          singleData?.paymentId ?
 
-      {/* Table */}
-      <table className="w-full text-left border-collapse border border-gray-200">
-        <thead className="bg-gray-200">
-          <tr>
-            <th className="border p-2">Account Code</th>
-            <th className="border p-2">Account Description</th>
-            <th className="border p-2">Dimension</th>
-            <th className="border p-2">Debit</th>
-            <th className="border p-2">Credit</th>
-            <th className="border p-2">Memo</th>
-            <th className="border p-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, index) => (
-            <tr key={index}>
-              <td className="border p-2">{row.accountCode}</td>
-              <td className="border p-2">{row.description}</td>
-              <td className="border p-2">{row.dimension}</td>
-              <td className="border p-2">{row.debit}</td>
-              <td className="border p-2">{row.credit}</td>
-              <td className="border p-2">{row.memo}</td>
-              <td className="border p-2">
-                <button
-                  className="text-red-500 hover:underline"
-                  onClick={() => handleDeleteRow(index)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-          {/* New Row Input */}
-          <tr>
-            <td className="border p-2">
-              <input
-                type="text"
-                className="w-full border p-1"
-                placeholder="Account Code"
-                value={newRow.accountCode}
-                onChange={(e) => handleInputChange(e, "accountCode")}
-              />
-            </td>
-            <td className="border p-2">
-              <input
-                type="text"
-                className="w-full border p-1"
-                placeholder="Description"
-                value={newRow.description}
-                onChange={(e) => handleInputChange(e, "description")}
-              />
-            </td>
-            <td className="border p-2">
-              <input
-                type="text"
-                className="w-full border p-1"
-                placeholder="Dimension"
-                value={newRow.dimension}
-                onChange={(e) => handleInputChange(e, "dimension")}
-              />
-            </td>
-            <td className="border p-2">
-              <input
-                type="number"
-                className="w-full border p-1"
-                placeholder="Debit"
-                value={newRow.debit}
-                onChange={(e) => handleInputChange(e, "debit")}
-              />
-            </td>
-            <td className="border p-2">
-              <input
-                type="number"
-                className="w-full border p-1"
-                placeholder="Credit"
-                value={newRow.credit}
-                onChange={(e) => handleInputChange(e, "credit")}
-              />
-            </td>
-            <td className="border p-2">
-              <input
-                type="text"
-                className="w-full border p-1"
-                placeholder="Memo"
-                value={newRow.memo}
-                onChange={(e) => handleInputChange(e, "memo")}
-              />
-            </td>
-            <td className="border p-2 text-center">
-              <button
-                className="bg-blue-500 text-white px-2 py-1 rounded"
-                onClick={handleAddRow}
-              >
-                Add
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      {/* Process Button */}
-      <div className="text-right mt-6">
-        <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-          Process Journal Entry
-        </button>
-      </div>
+            <UpdateButton setsingleData={setsingleData}
+              loading={loading}
+              setaddFormShow={setaddFormShow} /> :
+            <AddButton setsingleData={setsingleData}
+              loading={loading}
+              setaddFormShow={setaddFormShow} />
+        }
+      </form>
+      )}
+      <Table rows={data || []} column={column} />
     </div>
-  );
-};
+  )
+}
 
-export default PaymentVoucher;
+export default BankAdd

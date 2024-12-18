@@ -159,7 +159,6 @@ function BankAdd() {
     fetchDataCommon(page_list, options);
   };
 
-  console.log(`bank`, data);
   return (
     <div>
       {addFormShow ? (
