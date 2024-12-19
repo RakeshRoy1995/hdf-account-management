@@ -62,10 +62,10 @@ export default function ParentGL() {
     settrees([]);
     let apiEndPoint = ``;
 
-    if (user?.user?.organizationType == "PMU") {
-      apiEndPoint = "glAccount/getTree?organizationType=PMU";
+    if (user?.user?.organizationLevelId == 1) {
+      apiEndPoint = "glAccount/getTree?organizationLevelId=1";
     } else {
-      apiEndPoint = `glAccount/getTree?organizationType=PO&organizationId=${user?.user?.partnerOrganizationId}`;
+      apiEndPoint = `glAccount/getTree?organizationLevelId=2&organizationId=${user?.user?.partnerOrganizationId}`;
     }
 
     const response_ministry_List: any = await get_all_data(apiEndPoint);
@@ -152,7 +152,7 @@ export default function ParentGL() {
       }
     }
 
-    if (user?.user?.organizationType == "PMU") {
+    if (user?.user?.organizationLevelId == 1) {
       delete obj["glOrganizationId"];
     }
 
@@ -259,12 +259,13 @@ export default function ParentGL() {
               {show && (
                 <div className="row-span-11">
                   <>
-                    {user?.user?.organizationType ? (
+                  
+                    {user?.user?.organizationLevelId < 3 ? (
                       <>
                         <input
                           type="hidden"
-                          name="glOrganizationType"
-                          value={user?.user?.organizationType}
+                          name="glOrganizationLevelId"
+                          value={user?.user?.organizationLevelId}
                         />
                         <input
                           type="hidden"
