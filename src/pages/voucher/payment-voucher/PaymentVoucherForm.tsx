@@ -266,12 +266,6 @@ const PaymentVoucherForm = ({
             className="w-full p-2 border rounded"
           />
         </div>
-
-        <Status
-          name="recStatus"
-          setsingleData={setsingleData}
-          singleData={singleData}
-        />
       </div>
 
       {/* Table */}

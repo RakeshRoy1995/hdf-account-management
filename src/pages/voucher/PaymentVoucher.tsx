@@ -151,6 +151,7 @@ function PaymentVoucher() {
     const authToken = localStorage.getItem("customer_login_auth") || "";
     const token: any = authToken ? JSON.parse(authToken) : "";
     const obj: any = {
+      recStatus: "A",
       partnerOrganizationId: token?.user?.partnerOrganizationId || null,
       branchId: token?.user?.branchId || null,
       ...singleData,
