@@ -201,7 +201,7 @@ export default function ParentGL() {
         setsearchData(item);
         setshow(true);
         setaddMode(false);
-      } 
+      }
     });
     toggledItemRef.current = {};
   };
@@ -228,13 +228,17 @@ export default function ParentGL() {
     const { data }: any = await submitFormData(page_list, options);
     setgeneratedAcNo(data);
   };
+  console.log("Current user level:", user?.user?.roles);
+  console.log(user?.user)
+
+  const organizationLevelId = user?.user?.roles?.[0]?.organizationLevelId;
 
   return (
     <>
       <Breadcrumb name1={"GL"} name2={"GL Account"} url={"#"} />
 
       <form className="" onSubmit={handleSubmit}>
-        {user?.user?.organizationLevelId < 3 ? (
+        {organizationLevelId < 3 ? (
           <div className="bg-white rounded-xl shadow-md p-4">
             <div className="grid grid-rows-2 grid-flow-col gap-4 mt-5">
               <div className="row-span-1">
@@ -259,8 +263,8 @@ export default function ParentGL() {
               {show && (
                 <div className="row-span-11">
                   <>
-                  
-                    {user?.user?.organizationLevelId < 3 ? (
+
+                    {organizationLevelId < 3 ? (
                       <>
                         <input
                           type="hidden"
@@ -337,9 +341,9 @@ export default function ParentGL() {
                             </label>
 
                             <input
-                              onChange={(e:any) => {
+                              onChange={(e: any) => {
 
-                                const num :number = e.target.value.replace(/[^0-9]/g, '')
+                                const num: number = e.target.value.replace(/[^0-9]/g, '')
                                 setparentName(num);
                                 generate_ac_no(num);
                               }}
@@ -482,7 +486,7 @@ export default function ParentGL() {
                             />
                           </div>
 
-                          
+
 
                           {/* Status */}
                           <div className="flex flex-col relative ">
@@ -521,17 +525,17 @@ export default function ParentGL() {
                           <div className="relative"></div>
                           <div className="relative">
 
-                          {!addMode ? (
-                            <UpdateButtonGL
-                              setparentName={setparentName}
-                              searchData={searchData}
-                            />
-                          ) : (
-                            <CreateButton setaddMode={setaddMode} />
-                          )}
+                            {!addMode ? (
+                              <UpdateButtonGL
+                                setparentName={setparentName}
+                                searchData={searchData}
+                              />
+                            ) : (
+                              <CreateButton setaddMode={setaddMode} />
+                            )}
 
                           </div>
-                          
+
 
                           {/* <CreateUpdateBtn setsingleData={setsearchData} /> */}
                         </div>
