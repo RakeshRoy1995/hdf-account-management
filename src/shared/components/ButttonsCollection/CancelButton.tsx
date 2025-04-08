@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-const CancelButton = ({ setsingleData, setaddMode }: any) => {
+const CancelButton = ({ setsingleData, setaddFormShow }: any) => {
   const { t } = useTranslation();
 
   const formReset = () => {
@@ -14,8 +14,8 @@ const CancelButton = ({ setsingleData, setaddMode }: any) => {
       setsingleData(null);
     }
 
-    if (setaddMode) {
-      setaddMode(false)
+    if (setaddFormShow) {
+      setaddFormShow(false)
     }
   };
   return (

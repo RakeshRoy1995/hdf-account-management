@@ -367,7 +367,7 @@ const AllowanceSlot = () => {
     return (
         <>
             <Breadcrumb name1={"Allowance Slot"} name2={"Allowance Slot"} />
-            <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-10">
+            <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-5 drop-shadow-lg">
                 <div className="grid grid-cols-3 gap-5">
 
                     {/* project */}

@@ -5,6 +5,9 @@ const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 const authToken = localStorage.getItem("customer_login_auth") || "";
 const token: any = authToken ? JSON.parse(authToken) : "";
 
+const param = `organizationLevelId=${token?.user?.organizationLevelId || ""}&partnerOrganizationId=${token?.user?.partnerOrganizationId || ""}&branchId=${token?.user?.branchId || ""}`;
+
+
 // axios.defaults.headers.common[
 //   "Authorization"
 // ] = `Bearer ${token?.access_token}`;
@@ -37,6 +40,14 @@ export function registration(data: any) {
 }
 
 export function submitFormData(api: string, options: any) {
+  let page = "";
+
+  if (api.includes("?")) {
+    page = api + "&" + param;
+  } else {
+    page = api + "?" + param;
+  }
+
   const option = {
     ...options,
     headers: {
@@ -45,7 +56,29 @@ export function submitFormData(api: string, options: any) {
         : undefined,
       "content-type": "application/json",
     },
-    url: api,
+    url: page,
+  };
+  return axios(option);
+}
+
+export function submitFormData_multipart(api: string, options: any) {
+  let page = "";
+
+  if (api.includes("?")) {
+    page = api + "&" + param;
+  } else {
+    page = api + "?" + param;
+  }
+
+  const option = {
+    ...options,
+    headers: {
+      Authorization: token?.accessToken
+        ? `Bearer ${token?.accessToken}`
+        : undefined,
+      "content-type": "multipart/form-data",
+    },
+    url: page,
   };
   return axios(option);
 }
@@ -65,8 +98,16 @@ export function submitFIleData(api: string, options: any) {
   return axios(option);
 }
 
-export function get_all_data(url: string , params:any = undefined) {
+export function get_all_data(url: string, params: any = undefined) {
   const page_list = `${API_URL}/${url}`;
+
+  let page = "";
+
+  if (page_list.includes("?")) {
+    page = page_list + "&" + param;
+  } else {
+    page = page_list + "?" + param;
+  }
 
   const options = {
     method: "GET",
@@ -76,13 +117,12 @@ export function get_all_data(url: string , params:any = undefined) {
         : undefined,
       "content-type": "application/json",
     },
-    url: page_list,
-    params
+    url: page,
+    params,
   };
 
   return axios(options);
 }
-
 //All Location
 
 export function getDivisionData() {

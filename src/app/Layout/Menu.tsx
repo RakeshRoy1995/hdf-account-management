@@ -558,7 +558,7 @@ export default function Menu({ isSidebarOpen }) {
 
                     {/* Submenu Items */}
                     <Collapse in={TargetOpen[menu_data?.name]}>
-                      <ul className="pl-5">
+                      <ul className="pl-8">
                         {menu_data?.subMenu?.map(
                           (submenu) =>
                             submenu?.checked && (

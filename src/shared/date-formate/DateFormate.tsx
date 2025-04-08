@@ -12,27 +12,25 @@ export default function DateFormate({
 }: any) {
   const [FromselectedDate, setFromSelectedDate] = useState(null);
   return (
-    <div title={ label|| ""}>
-      <DatePicker
-        name={name}
-        required={required}
-        selected={
-          singleData?.[name]
-            ? new Date(formatDate_2(singleData?.[name]))
-            : FromselectedDate
-        }
-        onChange={(date: any) => {
-          setFromSelectedDate(date);
-          setsingleData({ ...singleData, [name]: date });
-        }}
-        dateFormat="dd/MM/yyyy"
-        placeholderText={label ||"DD/MM/YYYY"}
-        showYearDropdown
-        showMonthDropdown
-        dropdownMode="select"
-        autoComplete="off"
-        className="w-full border p-4 rounded h-14 text-lg relative "
-      />
-    </div>
+    <DatePicker
+      name={name}
+      required={required}
+      selected={
+        singleData?.[name]
+          ? new Date(formatDate_2(singleData?.[name]))
+          : FromselectedDate
+      }
+      onChange={(date: any) => {
+        setFromSelectedDate(date);
+        setsingleData({ ...singleData, [name]: date });
+      }}
+      dateFormat="dd/MM/yyyy"
+      placeholderText={label || "DD/MM/YYYY"}
+      showYearDropdown
+      showMonthDropdown
+      dropdownMode="select"
+      autoComplete="off"
+      className="w-full border p-4 rounded h-14 text-lg relative "
+    />
   );
 }

@@ -24,7 +24,7 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } :any= useForm();
 
   function setCookie(name, value, days) {
     let expires = "";
@@ -65,8 +65,9 @@ const Login = () => {
         // console.log("response?.data?.message", response?.data?.message);
       }
     } catch (error) {
-      console.log("Error toast about to trigger", error);
-      toast.error("Login failed.");
+      console.log("Error toast about to trigger", error?.response?.data?.message);
+      toast.error(error?.response?.data?.message || "Login failed.");
+    
       setLoading(false);
     }
   };
@@ -185,6 +186,7 @@ const Login = () => {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

@@ -12,34 +12,42 @@ export default function Location({ singleData, setsingleData }: any) {
 
   const divisionId =
     singleData?.location?.divisionId ||
-    singleData?.personal_info?.permanentAddress?.divisionId ||
-    singleData?.permanentAddress?.divisionId;
+    singleData?.address?.divisionId ||
+    singleData?.personal_info?.presentAddress?.divisionId ||
+    singleData?.presentAddress?.divisionId;
   const districtId =
     singleData?.location?.districtId ||
-    singleData?.personal_info?.permanentAddress?.districtId ||
-    singleData?.permanentAddress?.districtId;
+    singleData?.address?.districtId ||
+    singleData?.personal_info?.presentAddress?.districtId ||
+    singleData?.presentAddress?.districtId;
   const upazilaId =
     singleData?.location?.upazilaId ||
-    singleData?.personal_info?.permanentAddress?.upazilaId ||
-    singleData?.permanentAddress?.upazilaId;
+    singleData?.address?.upazilaId ||
+    singleData?.personal_info?.presentAddress?.upazilaId ||
+    singleData?.presentAddress?.upazilaId;
   const villageName =
     singleData?.location?.villageName ||
-    singleData?.personal_info?.permanentAddress?.villageName ||
-    singleData?.permanentAddress?.villageName;
+    singleData?.address?.villageName ||
+    singleData?.personal_info?.presentAddress?.villageName ||
+    singleData?.presentAddress?.villageName;
   const cityCorporationId =
     singleData?.location?.cityCorporationId ||
-    singleData?.personal_info?.permanentAddress?.cityCorporationId ||
-    singleData?.permanentAddress?.cityCorporationId;
+    singleData?.address?.cityCorporationId ||
+    singleData?.personal_info?.presentAddress?.cityCorporationId ||
+    singleData?.presentAddress?.cityCorporationId;
   const postCode =
     singleData?.location?.postCode ||
-    singleData?.personal_info?.permanentAddress?.postCode ||
-    singleData?.permanentAddress?.postCode;
+    singleData?.address?.postCode ||
+    singleData?.personal_info?.presentAddress?.postCode ||
+    singleData?.presentAddress?.postCode;
   const address =
     singleData?.location?.address ||
-    singleData?.personal_info?.permanentAddress?.address ||
-    singleData?.permanentAddress?.address;
+    singleData?.address?.address ||
+    singleData?.personal_info?.presentAddress?.address ||
+    singleData?.presentAddress?.address;
   const wardName =
     singleData?.location?.wardName ||
+    singleData?.address?.wardName ||
     singleData?.personal_info?.permanentAddress?.wardName ||
     singleData?.permanentAddress?.wardName;
 
@@ -66,8 +74,6 @@ export default function Location({ singleData, setsingleData }: any) {
         ...singleData,
         ...objLoc,
       };
-
-      console.log(`final_obj`, final_obj);
 
       setsingleData({...final_obj});
     }

@@ -23,7 +23,7 @@ export default function RolePermissionTree({ treeData, searchApi }: any) {
   } = useFetch(`${API_URL}/permission`);
 
   const [selectedItems, setSelectedItems] = React.useState<string[]>( []  );
-  const [selectedItems_, setSelectedItems_] = React.useState<string[]>({});
+  const [selectedItems_, setSelectedItems_] = React.useState<string[]>([]);
   const toggledItemRef = React.useRef<{ [itemId: string]: boolean }>({});
   const apiRef = useTreeViewApiRef();
 

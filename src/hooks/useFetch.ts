@@ -8,6 +8,8 @@ const authToken = localStorage.getItem("customer_login_auth") || "";
 const token: any = authToken ? JSON.parse(authToken) : "";
 
 const useFetch = (url: any, options = {}) => {
+  const param = `organizationLevelId=${token?.user?.organizationLevelId || ""}&partnerOrganizationId=${token?.user?.partnerOrganizationId || ""}&branchId=${token?.user?.branchId || ""}`;
+
   const [data, setData] = useState<any>(null);
   const [common_data, setcommon_Data] = useState(null);
   const [common_dataObj, setcommon_DataObj] = useState({});
@@ -18,6 +20,7 @@ const useFetch = (url: any, options = {}) => {
   const [deleteMsg, setdeleteMsg] = useState<any>(null);
   const [searchData, setsearchData] = useState<any>(null);
 
+  
   const fetchData = async () => {
     try {
       setError("");
@@ -31,7 +34,15 @@ const useFetch = (url: any, options = {}) => {
         },
       };
 
-      const response = await fetch(url, option);
+      let page = "";
+
+      if (url.includes("?")) {
+        page = url + "&" + param;
+      } else {
+        page = url + "?" + param;
+      }
+
+      const response = await fetch(page, option);
       const contentType = response.headers.get("Content-Type");
       if (!response.ok) {
         let errorMessage = `HTTP error! status: ${response.status}`;
@@ -46,8 +57,8 @@ const useFetch = (url: any, options = {}) => {
       const result = await response.json();
       setData(result);
       setLoading(false);
-    } catch (err:any) {
-      setError(err?.message || "There is a problem in server");
+    } catch (err: any) {
+      setError(err?.message || "সার্ভারে কিছু ত্রুটি ঘটছে");
       setLoading(false);
     }
     setLoading(false);
