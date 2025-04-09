@@ -32,13 +32,17 @@ function CloseSquare(props: SvgIconProps) {
 
 export default function ParentGL() {
   const user = JSON.parse(localStorage.getItem("customer_login_auth"));
-
+  const partnerOrganization = JSON.parse(localStorage.getItem("user_info"));
+console.log(partnerOrganization?.partnerOrganizationId)
+const PO_id = partnerOrganization?.partnerOrganizationId
   const [trees, settrees] = useState<any>([]);
   const [currencie, setcurrencie] = useState<any>([]);
 
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const toggledItemRef = useRef<{ [itemId: string]: boolean }>({});
   const apiRef = useTreeViewApiRef();
+  const organizationLevelId = user?.user?.roles?.[0]?.organizationLevelId;
+
 
   const [show, setshow] = useState(false);
   const [parentName, setparentName] = useState<any>("");
@@ -62,10 +66,10 @@ export default function ParentGL() {
     settrees([]);
     let apiEndPoint = ``;
 
-    if (user?.user?.organizationLevelId == 1) {
+    if (organizationLevelId == 1) {
       apiEndPoint = "glAccount/getTree?organizationLevelId=1";
     } else {
-      apiEndPoint = `glAccount/getTree?organizationLevelId=2&organizationId=${user?.user?.partnerOrganizationId}`;
+      apiEndPoint = `glAccount/getTree?organizationLevelId=2&organizationId=${PO_id}`;
     }
 
     const response_ministry_List: any = await get_all_data(apiEndPoint);
@@ -152,7 +156,7 @@ export default function ParentGL() {
       }
     }
 
-    if (user?.user?.organizationLevelId == 1) {
+    if (organizationLevelId == 1) {
       delete obj["glOrganizationId"];
     }
 
@@ -228,10 +232,7 @@ export default function ParentGL() {
     const { data }: any = await submitFormData(page_list, options);
     setgeneratedAcNo(data);
   };
-  console.log("Current user level:", user?.user?.roles);
-  console.log(user?.user)
 
-  const organizationLevelId = user?.user?.roles?.[0]?.organizationLevelId;
 
   return (
     <>
@@ -264,287 +265,290 @@ export default function ParentGL() {
                 <div className="row-span-11">
                   <>
 
-                    {organizationLevelId < 3 ? (
-                      <>
-                        <input
-                          type="hidden"
-                          name="glOrganizationLevelId"
-                          value={user?.user?.organizationLevelId}
-                        />
-                        <input
-                          type="hidden"
-                          name="glOrganizationId"
-                          value={user?.user?.partnerOrganizationId}
-                        />
+                    {
+                      organizationLevelId < 3 ? (
+                        <>
+                          <input
+                            type="hidden"
+                            name="glOrganizationLevelId"
+                            value={organizationLevelId}
+                          />
+                          <input
+                            type="hidden"
+                            name="glOrganizationId"
+                            value={PO_id}
+                          />
 
-                        {!addMode && (
-                          <div
-                            className="w-fit p-3 border-2 cursor-pointer rounded-full border-primaryColor text-primaryColor text-sm font-bold  bg-white text-center"
-                            onClick={(e: any) => {
-                              setaddMode(!addMode);
-                              setparentName("");
-                            }}
-                          >
-                            + Create A New Account
-                          </div>
-                        )}
-
-                        <div className="grid grid-cols-2 gap-4 mt-5">
-                          <div className="relative">
-                            <label className="block text-sm font-medium text-gray-700 absolute -mt-1 ml-4 bg-white">
-                              Account Category
-                            </label>
-                            <select
-                              name="glAccountCategory"
-                              // onChange={(e) => {
-                              //   setsearchData({
-                              //     ...searchData,
-                              //     [e.target.name]: e.target.value,
-                              //   });
-                              // }}
-                              value={searchData?.glAccountCategory}
-                              id=""
-                              className="mt-1 block w-full p-4 border border-gray-300 rounded-md shadow-sm"
+                          {!addMode && (
+                            <div
+                              className="w-fit p-3 border-2 cursor-pointer rounded-full border-primaryColor text-primaryColor text-sm font-bold  bg-white text-center"
+                              onClick={(e: any) => {
+                                setaddMode(!addMode);
+                                setparentName("");
+                              }}
                             >
-                              <option value="">Select Account Category</option>
-                              <option value="Asset">Asset</option>
-                              <option value="Liability">Liability</option>
-                              <option value="Equity">Equity</option>
-                              <option value="Income">Income</option>
-                              <option value="Expense">Expense</option>
-                            </select>
-                          </div>
-
-                          <div className="relative">
-                            <label className="block text-sm font-medium text-gray-700 absolute -mt-1 ml-4 bg-white">
-                              Account Name
-                            </label>
-
-                            <input
-                              onChange={(e) => {
-                                setsearchData({
-                                  ...searchData,
-                                  [e.target.name]: e.target.value,
-                                });
-                              }}
-                              type="text"
-                              value={searchData?.glAccountName}
-                              name="glAccountName"
-                              placeholder="Account Name"
-                              className="xs:w-full md:w-full lg:w-full xl:w-full  p-5 border border-gray-400 rounded-lg text-black"
-                            />
-                          </div>
-
-                          <div className="relative">
-                            <label className="block text-sm font-medium text-gray-700 absolute -mt-1 ml-4 bg-white">
-                              Account No
-                            </label>
-
-                            <input
-                              onChange={(e: any) => {
-
-                                const num: number = e.target.value.replace(/[^0-9]/g, '')
-                                setparentName(num);
-                                generate_ac_no(num);
-                              }}
-                              value={parentName}
-                              name="glAccountNo"
-                              type="text"
-                              placeholder="Account No ."
-                              className="xs:w-full md:w-full lg:w-full xl:w-full  p-5 border border-gray-400 rounded-lg text-black"
-                            />
-                          </div>
-
-                          <div className="relative">
-                            <label className="block text-sm font-medium text-gray-700 absolute -mt-1 ml-4 bg-white">
-                              Generated Account No
-                            </label>
-
-                            <input
-                              readOnly
-                              value={generatedAcNo || ""}
-                              type="text"
-                              placeholder="Generated Account No"
-                              className="xs:w-full md:w-full lg:w-full xl:w-full  p-5 border border-gray-400 rounded-lg text-black"
-                            />
-                          </div>
-
-                          <div className="relative">
-                            <label className="block text-sm font-medium text-gray-700 absolute -mt-1 ml-4 bg-white">
-                              Parent Account No
-                            </label>
-
-                            <input
-                              value={addMode ? searchData?.glAccountNo : ""}
-                              type="text"
-                              name="parentGlAccountNo"
-                              placeholder="Parent Account No"
-                              className="xs:w-full md:w-full lg:w-full xl:w-full  p-5 border border-gray-400 rounded-lg text-black"
-                            />
-                          </div>
-
-                          <div className="relative">
-                            <label className="block text-sm font-medium text-gray-700 absolute -mt-1 ml-4 bg-white">
-                              Currency
-                            </label>
-                            <select
-                              value={searchData?.glCurrencyId}
-                              name="glCurrencyId"
-                              onChange={(e) => {
-                                setsearchData({
-                                  ...searchData,
-                                  [e.target.name]: e.target.value,
-                                });
-                              }}
-                              id=""
-                              className="mt-1 block w-full p-4 border border-gray-300 rounded-md shadow-sm"
-                            >
-                              {/* <option value="">select</option> */}
-                              {currencie.map((d: any) => (
-                                <option value={d.currencyId}>
-                                  {d.currencyCode}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-
-                          <div className="relative">
-                            <div className="flex items-center space-x-1 ">
-                              <input
-                                onClick={(e: any) => {
-                                  setsearchData({
-                                    ...searchData,
-                                    [e.target.name]: e.target.checked,
-                                    ["glIsParent"]: !e.target.checked,
-                                  });
-                                }}
-                                checked={searchData?.glIsSubsidiary}
-                                className="w-4 h-4 rounded-full border-gray-400 accent-[#ffcc1d]"
-                                type="checkbox"
-                                name="glIsSubsidiary"
-                              />
-                              <p className="leading-6">Is Subsidiary Account</p>
+                              + Create A New Account
                             </div>
-                          </div>
+                          )}
 
-                          <div className="relative">
-                            <div className="flex items-center space-x-1 ">
-                              <input
-                                onClick={(e: any) => {
-                                  setsearchData({
-                                    ...searchData,
-                                    [e.target.name]: e.target.checked,
-                                    ["glIsSubsidiary"]: !e.target.checked,
-                                  });
-                                }}
-                                checked={searchData?.glIsParent}
-                                className="w-4 h-4 rounded-full border-gray-400 accent-[#ffcc1d]"
-                                type="checkbox"
-                                name="glIsParent"
-                              />
-                              <p className="leading-6">Is Parent Account</p>
+                          <div className="grid grid-cols-2 gap-4 mt-5">
+                            <div className="relative">
+                              <label className="block text-sm font-medium text-gray-700 absolute -mt-1 ml-4 bg-white">
+                                Account Category
+                              </label>
+                              <select
+                                name="glAccountCategory"
+                                // onChange={(e) => {
+                                //   setsearchData({
+                                //     ...searchData,
+                                //     [e.target.name]: e.target.value,
+                                //   });
+                                // }}
+                                value={searchData?.glAccountCategory}
+                                id=""
+                                className="mt-1 block w-full p-4 border border-gray-300 rounded-md shadow-sm"
+                              >
+                                <option value="">Select Account Category</option>
+                                <option value="Asset">Asset</option>
+                                <option value="Liability">Liability</option>
+                                <option value="Equity">Equity</option>
+                                <option value="Income">Income</option>
+                                <option value="Expense">Expense</option>
+                              </select>
                             </div>
-                          </div>
 
-                          <div className="relative">
-                            <div className="flex items-center space-x-1 ">
+                            <div className="relative">
+                              <label className="block text-sm font-medium text-gray-700 absolute -mt-1 ml-4 bg-white">
+                                Account Name
+                              </label>
+
                               <input
                                 onChange={(e) => {
                                   setsearchData({
                                     ...searchData,
-                                    [e.target.name]: e.target.checked,
+                                    [e.target.name]: e.target.value,
                                   });
                                 }}
-                                checked={searchData?.isTransactionEnabled}
-                                className="w-4 h-4 rounded-full border-gray-400 accent-[#ffcc1d]"
-                                type="checkbox"
-                                name="isTransactionEnabled"
+                                type="text"
+                                value={searchData?.glAccountName}
+                                name="glAccountName"
+                                placeholder="Account Name"
+                                className="xs:w-full md:w-full lg:w-full xl:w-full  p-5 border border-gray-400 rounded-lg text-black"
                               />
-                              <p className="leading-6">
-                                Is Manual Transaction enable?{" "}
-                              </p>
                             </div>
-                          </div>
 
-                          <div className="relative"></div>
+                            <div className="relative">
+                              <label className="block text-sm font-medium text-gray-700 absolute -mt-1 ml-4 bg-white">
+                                Account No
+                              </label>
 
-                          <div className="relative">
-                            <label className="block text-sm font-medium text-gray-700 absolute -mt-1 ml-4 bg-white">
-                              Description
-                            </label>
-                            <textarea
-                              onChange={(e) => {
-                                setsearchData({
-                                  ...searchData,
-                                  [e.target.name]: e.target.value,
-                                });
-                              }}
-                              value={searchData?.glDescription}
-                              name="glDescription"
-                              placeholder="Description"
-                              className="xs:w-full md:w-full lg:w-full xl:w-full  p-5 border border-gray-400 rounded-lg text-black"
-                            />
-                          </div>
+                              <input
+                                onChange={(e: any) => {
 
-
-
-                          {/* Status */}
-                          <div className="flex flex-col relative ">
-                            <label
-                              htmlFor="glRecStatus"
-                              className="text-sm  absolute -mt-2 ml-4 mb-2 bg-white text-QuaternaryColor"
-                            >
-                              Status
-                            </label>
-                            <select
-                              onChange={(e) => {
-                                setsearchData({
-                                  ...searchData,
-                                  [e.target.name]: e.target.value,
-                                });
-                              }}
-                              value={searchData?.glRecStatus}
-                              id="glRecStatus"
-                              name="glRecStatus"
-                              className=" border p-4 rounded appearance-none h-14"
-                            >
-                              <option
-                                value="A"
-                                selected={singleData?.glRecStatus == "A"}
-                              >
-                                Active{" "}
-                              </option>
-                              <option
-                                value="I"
-                                selected={singleData?.glRecStatus == "I"}
-                              >
-                                Inactive
-                              </option>
-                            </select>
-                          </div>
-                          <div className="relative"></div>
-                          <div className="relative">
-
-                            {!addMode ? (
-                              <UpdateButtonGL
-                                setparentName={setparentName}
-                                searchData={searchData}
+                                  const num: number = e.target.value.replace(/[^0-9]/g, '')
+                                  setparentName(num);
+                                  generate_ac_no(num);
+                                }}
+                                value={parentName}
+                                name="glAccountNo"
+                                type="text"
+                                placeholder="Account No ."
+                                className="xs:w-full md:w-full lg:w-full xl:w-full  p-5 border border-gray-400 rounded-lg text-black"
                               />
-                            ) : (
-                              <CreateButton setaddMode={setaddMode} />
-                            )}
+                            </div>
 
+                            <div className="relative">
+                              <label className="block text-sm font-medium text-gray-700 absolute -mt-1 ml-4 bg-white">
+                                Generated Account No
+                              </label>
+
+                              <input
+                                readOnly
+                                value={generatedAcNo || ""}
+                                type="text"
+                                placeholder="Generated Account No"
+                                className="xs:w-full md:w-full lg:w-full xl:w-full  p-5 border border-gray-400 rounded-lg text-black"
+                              />
+                            </div>
+
+                            <div className="relative">
+                              <label className="block text-sm font-medium text-gray-700 absolute -mt-1 ml-4 bg-white">
+                                Parent Account No
+                              </label>
+
+                              <input
+                                value={addMode ? searchData?.glAccountNo : ""}
+                                type="text"
+                                name="parentGlAccountNo"
+                                placeholder="Parent Account No"
+                                className="xs:w-full md:w-full lg:w-full xl:w-full  p-5 border border-gray-400 rounded-lg text-black"
+                              />
+                            </div>
+
+                            <div className="relative">
+                              <label className="block text-sm font-medium text-gray-700 absolute -mt-1 ml-4 bg-white">
+                                Currency
+                              </label>
+                              <select
+                                value={searchData?.glCurrencyId}
+                                name="glCurrencyId"
+                                onChange={(e) => {
+                                  setsearchData({
+                                    ...searchData,
+                                    [e.target.name]: e.target.value,
+                                  });
+                                }}
+                                id=""
+                                className="mt-1 block w-full p-4 border border-gray-300 rounded-md shadow-sm"
+                              >
+                                {/* <option value="">select</option> */}
+                                {currencie.map((d: any) => (
+                                  <option value={d.currencyId}>
+                                    {d.currencyCode}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+
+                            <div className="relative">
+                              <div className="flex items-center space-x-1 ">
+                                <input
+                                  onClick={(e: any) => {
+                                    setsearchData({
+                                      ...searchData,
+                                      [e.target.name]: e.target.checked,
+                                      ["glIsParent"]: !e.target.checked,
+                                    });
+                                  }}
+                                  checked={searchData?.glIsSubsidiary}
+                                  className="w-4 h-4 rounded-full border-gray-400 accent-[#ffcc1d]"
+                                  type="checkbox"
+                                  name="glIsSubsidiary"
+                                />
+                                <p className="leading-6">Is Subsidiary Account</p>
+                              </div>
+                            </div>
+
+                            <div className="relative">
+                              <div className="flex items-center space-x-1 ">
+                                <input
+                                  onClick={(e: any) => {
+                                    setsearchData({
+                                      ...searchData,
+                                      [e.target.name]: e.target.checked,
+                                      ["glIsSubsidiary"]: !e.target.checked,
+                                    });
+                                  }}
+                                  checked={searchData?.glIsParent}
+                                  className="w-4 h-4 rounded-full border-gray-400 accent-[#ffcc1d]"
+                                  type="checkbox"
+                                  name="glIsParent"
+                                />
+                                <p className="leading-6">Is Parent Account</p>
+                              </div>
+                            </div>
+
+                            <div className="relative">
+                              <div className="flex items-center space-x-1 ">
+                                <input
+                                  onChange={(e) => {
+                                    setsearchData({
+                                      ...searchData,
+                                      [e.target.name]: e.target.checked,
+                                    });
+                                  }}
+                                  checked={searchData?.isTransactionEnabled}
+                                  className="w-4 h-4 rounded-full border-gray-400 accent-[#ffcc1d]"
+                                  type="checkbox"
+                                  name="isTransactionEnabled"
+                                />
+                                <p className="leading-6">
+                                  Is Manual Transaction enable?{" "}
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="relative"></div>
+
+                            <div className="relative">
+                              <label className="block text-sm font-medium text-gray-700 absolute -mt-1 ml-4 bg-white">
+                                Description
+                              </label>
+                              <textarea
+                                onChange={(e) => {
+                                  setsearchData({
+                                    ...searchData,
+                                    [e.target.name]: e.target.value,
+                                  });
+                                }}
+                                value={searchData?.glDescription}
+                                name="glDescription"
+                                placeholder="Description"
+                                className="xs:w-full md:w-full lg:w-full xl:w-full  p-5 border border-gray-400 rounded-lg text-black"
+                              />
+                            </div>
+
+
+
+                            {/* Status */}
+                            <div className="flex flex-col relative ">
+                              <label
+                                htmlFor="glRecStatus"
+                                className="text-sm  absolute -mt-2 ml-4 mb-2 bg-white text-QuaternaryColor"
+                              >
+                                Status
+                              </label>
+                              <select
+                                onChange={(e) => {
+                                  setsearchData({
+                                    ...searchData,
+                                    [e.target.name]: e.target.value,
+                                  });
+                                }}
+                                value={searchData?.glRecStatus}
+                                id="glRecStatus"
+                                name="glRecStatus"
+                                className=" border p-4 rounded appearance-none h-14"
+                              >
+                                <option
+                                  value="A"
+                                  selected={singleData?.glRecStatus == "A"}
+                                >
+                                  Active{" "}
+                                </option>
+                                <option
+                                  value="I"
+                                  selected={singleData?.glRecStatus == "I"}
+                                >
+                                  Inactive
+                                </option>
+                              </select>
+                            </div>
+                            <div className="relative"></div>
+                            <div className="relative">
+
+                              {!addMode ? (
+                                <UpdateButtonGL
+                                  setparentName={setparentName}
+                                  searchData={searchData}
+                                />
+                              ) : (
+                                <CreateButton setaddMode={setaddMode} />
+                              )}
+
+                            </div>
+
+
+                            {/* <CreateUpdateBtn setsingleData={setsearchData} /> */}
                           </div>
-
-
-                          {/* <CreateUpdateBtn setsingleData={setsearchData} /> */}
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <p>Access denied. Only for PMU and PO users</p>
-                      </>
-                    )}
+                        </>
+                      )
+                        :
+                        (
+                          <>
+                            <p>Access denied. Only for PMU and PO users</p>
+                          </>
+                        )}
                   </>
                 </div>
               )}
