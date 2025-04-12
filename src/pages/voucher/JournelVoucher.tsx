@@ -1,176 +1,544 @@
-import React, { useState } from "react";
+import { BreadcumbWithButton } from "@/shared/BreadcumbWithButton/BreadcumbWithButton";
+import Table from "@/shared/Table/Table";
+import Swal from "sweetalert2";
+import React, { useEffect, useState } from "react";
+import useFetch from "@/hooks/useFetch";
+import UpdateButton from "@/shared/components/ButttonsCollection/UpdateButton";
+import AddButton from "@/shared/components/ButttonsCollection/AddButton";
+import Breadcrumb from "@/shared/Breadcumb/Breadcrumb";
+import { formatDate_3, get_role, modelCss } from "@/utils";
+import { get_all_data, submitFormData } from "@/api/Reqest";
+import { Modal, Tab } from "@mui/material";
+import { Box } from "@mui/material";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
+import {History} from '@mui/icons-material';
+import DataTable from "react-data-table-component";
+import JournelVoucherForm from "./journel-voucher/JournelVoucherForm";
 
-const JournelVoucher = () => {
-  const [rows, setRows] = useState([
-    { accountCode: "12345", description: "testing", dimension: "007/2024 Supplier one", debit: "111.00", credit: "1111", memo: "" },
-    { accountCode: "1101", description: "cash", dimension: "", debit: "", credit: "11.00", memo: "" }
-  ]);
+const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
+const token = localStorage.getItem("token");
 
-  const [newRow, setNewRow] = useState({
-    accountCode: "",
-    description: "",
-    dimension: "",
-    debit: "",
-    credit: "",
-    memo: ""
-  });
+function JournelVoucher() {
+  const {
+    data,
+    loading,
+    error,
+    fetchData,
+    deleteData,
+    deleteMsg,
+    common_data,
+    fetchDataCommon,
+    setcommon_Data,
+    fetchSingleDataCommonByID,
+    setsingleData,
+    singleData,
+    addFormShow,
+    setaddFormShow,
+  } = useFetch(`${API_URL}/journals`);
 
-  const handleAddRow = () => {
-    setRows([...rows, newRow]);
-    setNewRow({ accountCode: "", description: "", dimension: "", debit: "", credit: "", memo: "" });
+  const [rows, setRows] = useState([]);
+
+  const [currency, setCurrency] = useState<any>([]);
+  const [payTo, setPayTo] = useState<any>([]);
+  const [bankAccount, setBankAccount] = useState<any>([]);
+  const [cashAccount, setCashAccount] = useState<any>([]);
+  const [GL, setGL] = useState<any>([]);
+  const [historyData, setHistoryData] = useState<any>([]);
+  const [historyOpen, setHistoryOpen] = useState(false);
+
+  const fetchInitData = async () => {
+    fetchData();
+    setsingleData({...singleData,voucherType:"BANK"})
   };
 
-  const handleDeleteRow = (index) => {
-    const updatedRows = rows.filter((_, i) => i !== index);
-    setRows(updatedRows);
+  const fetchHistory = async (id: any) => {
+    const apiEndPoint = `journals/approval/history/${id}`;
+    const response = await get_all_data(apiEndPoint);
+    setHistoryData(response?.data);
+    setHistoryOpen(true);
   };
 
-  const handleInputChange = (e, field) => {
-    setNewRow({ ...newRow, [field]: e.target.value });
+  useEffect(() => {
+    fetchInitData();
+  }, []);
+
+  useEffect(() => {
+    if (common_data) {
+      //show success message
+      Swal.fire({
+        icon: "success",
+        text: "Success",
+        confirmButtonText: "Close",
+      });
+      setaddFormShow(false);
+      setcommon_Data(null);
+      fetchData();
+    }
+
+    if (error) {
+      //show error message
+      Swal.fire({
+        icon: "error",
+        text: error?.data?.message,
+        confirmButtonText: "Close",
+      });
+    }
+  }, [error?.data?.timestamp, common_data, error]);
+
+  useEffect(() => {
+    if (deleteMsg) {
+      //show success message
+      setcommon_Data(null);
+      fetchData();
+    }
+  }, [deleteMsg]);
+
+  const AccountName = (id: any, type: any) => {
+    if (type == "CASH") {
+      const gl_name = cashAccount.find((bnk: any) => bnk.cashAccountId == id);
+      return gl_name?.caCode + " - " + gl_name?.caName;
+    } else {
+      const bank_name = bankAccount.find((bnk: any) => bnk.bankAccountId == id);
+      return bank_name?.accountName + " - " + bank_name?.accountNumber;
+    }
   };
+
+  const column = [
+    {
+      name: "Pay To",
+      selector: (row: any) => row.payTo,
+      sortable: true,
+    },
+    {
+      name: "TransferDate",
+      selector: (row: any) => row.transDate,
+      sortable: true,
+    },
+    {
+      name: "Voucher No",
+      selector: (row: any) => row.voucherNo,
+      sortable: true,
+    },
+
+    {
+      name: "Voucher Type",
+      selector: (row: any) => row.voucherType,
+      sortable: true,
+    },
+
+    {
+      name: "Voucher Type",
+      selector: (row: any) => row.voucherType,
+      sortable: true,
+    },
+
+    {
+      name: "Account",
+      selector: (row: any) =>
+        AccountName(row.bankAccountId || row.cashAccountId, row.accountType),
+      sortable: true,
+    },
+
+
+    {
+      name: "Action",
+      selector: (row: any) => row.approvalStatus,
+      cell: (row) => (
+        <div className="space-x-2">
+          <>
+          <div className="cursor-pointer" onClick={()=>{
+            fetchHistory(row.paymentId)
+          }}>
+            <History/>
+          </div>
+            {row.approvalStatus == "COMPLETE" ? (
+              "DONE"
+            ) : (
+              <>
+                <button
+                  aria-label="view"
+                  className="bg-green-500 hover:bg-none rounded-w-1/2 text-white mt-2 p-2"
+                  onClick={(e: any) => {
+                    setOpen(true);
+                    changeStatus(
+                      row.paymentId,
+
+                      "APPROVED",
+                    );
+                  }}
+                >
+                  APPROVE
+                </button>
+
+                <button
+                  aria-label="view"
+                  className="bg-blue-800 text-white rounded-w-1/2 hover:bg-none m-2 p-2"
+                  onClick={(e: any) => {
+                    setOpen(true);
+                    changeStatus(
+                      row.paymentId,
+
+                      "REJECTED",
+                    );
+                  }}
+                >
+                  REVIEW
+                </button>
+              </>
+            )}
+          </>
+        </div>
+      ),
+    },
+  ];
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    const authToken = localStorage.getItem("customer_login_auth") || "";
+    const token: any = authToken ? JSON.parse(authToken) : "";
+    const obj: any = {
+      recStatus: "A",
+      partnerOrganizationId: token?.user?.partnerOrganizationId || null,
+      branchId: token?.user?.branchId || null,
+      ...singleData,
+      journalLines: rows,
+    };
+
+    obj.transDate = formatDate_3(obj.transDate);
+    obj.chequeDate = formatDate_3(obj.chequeDate);
+
+    let page_list = `${API_URL}/journals`;
+    let method = "POST";
+
+    if (singleData?.bankId) {
+      page_list = `${API_URL}/journals/${singleData?.paymentId}`;
+      method = "PUT";
+    }
+    const options = {
+      method,
+      data: obj,
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    fetchDataCommon(page_list, options);
+  };
+
+  const currency_list_api = async () => {
+    const apiEndPoint = "currencies";
+    const response = await get_all_data(apiEndPoint);
+    const currencyList = response?.data;
+    setCurrency(currencyList);
+  };
+
+  const pay_to_list_api = async () => {
+    const apiEndPoint = "payment-to";
+    const response = await get_all_data(apiEndPoint);
+    const payToList = response?.data;
+    setPayTo(payToList);
+  };
+
+  const bank_account_list_api = async () => {
+    const apiEndPoint = "bank-accounts";
+    const response = await get_all_data(apiEndPoint);
+    const bankAccountList = response?.data;
+    setBankAccount(bankAccountList);
+  };
+
+  const cash_account_list_api = async () => {
+    const apiEndPoint = "cash-accounts";
+    const response = await get_all_data(apiEndPoint);
+    const cashAccountList = response?.data;
+    setCashAccount(cashAccountList);
+  };
+
+  const gl_list_api = async () => {
+    const apiEndPoint = "glAccount/getActiveGl";
+    const response_ministry_List: any = await get_all_data(apiEndPoint);
+    const ministry_List_Array = response_ministry_List;
+    setGL(ministry_List_Array?.data);
+  };
+
+  const fetchAppravalList = async () => {
+    const type = get_role();
+    const page_list = `${API_URL}/journals/approval/by/role?currentPage=1&pageSize=10000&roleId=${type}`;
+    const { data }: any = await submitFormData(page_list, {});
+    setallApprovalList(data?.content);
+    // setMCPData(data?.content);
+  };
+
+  useEffect(() => {
+    currency_list_api();
+    pay_to_list_api();
+    bank_account_list_api();
+    cash_account_list_api();
+    gl_list_api();
+    fetchAppravalList();
+  }, []);
+
+  const [value, setValue] = useState("1");
+
+  const changeStatus = async (id: any, approvalStatus: string) => {
+    setOpen(true);
+    const user = JSON.parse(localStorage.getItem("customer_login_auth"));
+    setstatusPayload({ approvalStatus, id, userId: user?.user?.userId });
+  };
+
+  const changeStatusFunc = async () => {
+    const options = {
+      method: "put",
+      data: statusPayload,
+    };
+
+    try {
+      const page_list = `${API_URL}/journals/approval/request/${statusPayload?.id}`;
+      await submitFormData(page_list, options);
+
+      Swal.fire({
+        icon: "success",
+        text: "Success",
+        confirmButtonText: "Close",
+      });
+
+      setOpen(false);
+      fetchInitData();
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        text: error?.response.data?.message,
+        confirmButtonText: "বন্ধ করুন",
+      });
+      setOpen(false);
+    }
+  };
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
+
+  const [allApprovalList, setallApprovalList] = useState<any>([]);
+  const [open, setOpen] = useState(false);
+  const [statusPayload, setstatusPayload] = useState<any>({});
+
+
+  
+
+  const completed_list =
+    data?.content.filter(
+      (d: any) => d.approvalStatus == "COMPLETE",
+    ) || [];
+
+  const All_list =
+    data?.content.filter(
+      (d: any) => d.approvalStatus != "COMPLETE",
+    ) || [];
+
+  const handleClose = () => setOpen(false);
+  const handleHistoryClose = () => setHistoryOpen(false);
+
+
+  const columnHistory = [
+    {
+      name: "Created By",
+      selector: (row: any) => row.createdByName,
+      sortable: true,
+    },
+    {
+      name: "Comment",
+      selector: (row: any) => row.comment,
+      sortable: true,
+    },
+    {
+      name: "Created Date",
+      selector: (row: any) => row.createdAt,
+      sortable: true,
+    },
+    {
+      name: "Previous Status",
+      selector: (row: any) => row.prevApprovalStatus ? row.prevApprovalStatus : "N/A",
+      sortable: true,
+    },
+
+    {
+      name: "Status",
+      selector: (row: any) => row.approvalStatus,
+      sortable: true,
+    },
+
+  ];
 
   return (
-    <div className="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Journal Entry</h2>
+    <div>
+      {addFormShow ? (
+        <Breadcrumb name1={"Journel Voucher"} name2={"Journel Voucher Setup"} />
+      ) : (
+        <BreadcumbWithButton
+          name={"Journel Voucher"}
+          url={"#"}
+          setaddFormShow={setaddFormShow}
+        />
+      )}
 
-      {/* Form Fields */}
-      <div className="grid grid-cols-2 gap-6 mb-6">
-        <div>
-          <label className="block font-semibold mb-1">Journal Date:</label>
-          <input type="date" defaultValue="2022-12-31" className="w-full p-2 border rounded" />
-        </div>
-        <div>
-          <label className="block font-semibold mb-1">Document Date:</label>
-          <input type="date" defaultValue="2024-12-15" className="w-full p-2 border rounded" />
-        </div>
-        <div>
-          <label className="block font-semibold mb-1">Currency:</label>
-          <select className="w-full p-2 border rounded">
-            <option>Rand</option>
-          </select>
-        </div>
-        <div>
-          <label className="block font-semibold mb-1">Exchange Rate:</label>
-          <input type="number" defaultValue="1.000" className="w-full p-2 border rounded" />
-        </div>
-        <div>
-          <label className="block font-semibold mb-1">Reference:</label>
-          <input type="text" defaultValue="416/2022" className="w-full p-2 border rounded" />
-        </div>
-        <div>
-          <label className="block font-semibold mb-1">Quick Entry:</label>
-          <input type="number" defaultValue="12" className="w-full p-2 border rounded" />
-        </div>
-      </div>
+      {addFormShow && (
+        <form
+          className="bg-white rounded-2xl p-2 drop-shadow-lg mb-5"
+          onSubmit={handleSubmit}
+        >
+          <JournelVoucherForm
+            singleData={singleData}
+            setsingleData={setsingleData}
+            rows={rows}
+            setRows={setRows}
+            currency={currency}
+            payTo={payTo}
+            bankAccount={bankAccount}
+            cashAccount={cashAccount}
+            GL={GL}
+            setCurrency={setCurrency}
+            setPayTo={setPayTo}
+            setBankAccount={setBankAccount}
+            setCashAccount={setCashAccount}
+            setGL={setGL}
+          />
+          {singleData?.paymentId ? (
+            <UpdateButton
+              setsingleData={setsingleData}
+              loading={loading}
+              setaddFormShow={setaddFormShow}
+            />
+          ) : (
+            <AddButton
+              setsingleData={setsingleData}
+              loading={loading}
+              setaddFormShow={setaddFormShow}
+            />
+          )}
+        </form>
+      )}
 
-      {/* Table */}
-      <table className="w-full text-left border-collapse border border-gray-200">
-        <thead className="bg-gray-200">
-          <tr>
-            <th className="border p-2">Account Code</th>
-            <th className="border p-2">Account Description</th>
-            <th className="border p-2">Dimension</th>
-            <th className="border p-2">Debit</th>
-            <th className="border p-2">Credit</th>
-            <th className="border p-2">Memo</th>
-            <th className="border p-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, index) => (
-            <tr key={index}>
-              <td className="border p-2">{row.accountCode}</td>
-              <td className="border p-2">{row.description}</td>
-              <td className="border p-2">{row.dimension}</td>
-              <td className="border p-2">{row.debit}</td>
-              <td className="border p-2">{row.credit}</td>
-              <td className="border p-2">{row.memo}</td>
-              <td className="border p-2">
-                <button
-                  className="text-red-500 hover:underline"
-                  onClick={() => handleDeleteRow(index)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-          {/* New Row Input */}
-          <tr>
-            <td className="border p-2">
-              <input
-                type="text"
-                className="w-full border p-1"
-                placeholder="Account Code"
-                value={newRow.accountCode}
-                onChange={(e) => handleInputChange(e, "accountCode")}
-              />
-            </td>
-            <td className="border p-2">
-              <input
-                type="text"
-                className="w-full border p-1"
-                placeholder="Description"
-                value={newRow.description}
-                onChange={(e) => handleInputChange(e, "description")}
-              />
-            </td>
-            <td className="border p-2">
-              <input
-                type="text"
-                className="w-full border p-1"
-                placeholder="Dimension"
-                value={newRow.dimension}
-                onChange={(e) => handleInputChange(e, "dimension")}
-              />
-            </td>
-            <td className="border p-2">
-              <input
-                type="number"
-                className="w-full border p-1"
-                placeholder="Debit"
-                value={newRow.debit}
-                onChange={(e) => handleInputChange(e, "debit")}
-              />
-            </td>
-            <td className="border p-2">
-              <input
-                type="number"
-                className="w-full border p-1"
-                placeholder="Credit"
-                value={newRow.credit}
-                onChange={(e) => handleInputChange(e, "credit")}
-              />
-            </td>
-            <td className="border p-2">
-              <input
-                type="text"
-                className="w-full border p-1"
-                placeholder="Memo"
-                value={newRow.memo}
-                onChange={(e) => handleInputChange(e, "memo")}
-              />
-            </td>
-            <td className="border p-2 text-center">
-              <button
-                className="bg-blue-500 text-white px-2 py-1 rounded"
-                onClick={handleAddRow}
-              >
-                Add
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <TabContext value={value}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <TabList onChange={handleTabChange} aria-label="lab API tabs example">
+            <Tab label="List" value="1" />
+            <Tab label="Pending List" value="2" />
+            <Tab label="Completed" value="3" />
+          </TabList>
+        </Box>
 
-      {/* Process Button */}
-      <div className="text-right mt-6">
-        <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-          Process Journal Entry
-        </button>
-      </div>
+        <TabPanel value="1">
+          <Table rows={All_list} column={column} getheaderColor={() => {}} />
+        </TabPanel>
+
+        <TabPanel value="2">
+          <Table
+            rows={allApprovalList}
+            column={column}
+            getheaderColor={() => {}}
+          />
+        </TabPanel>
+
+        <TabPanel value="3">
+          <Table
+            rows={completed_list}
+            column={column}
+            getheaderColor={() => {}}
+          />
+        </TabPanel>
+      </TabContext>
+
+      <Modal open={open} onClose={handleClose} aria-labelledby="modal-title">
+        <Box
+          sx={modelCss}
+        >
+          {/* Modal content */}
+
+          <div className="flex flex-col relative ">
+            <label
+              htmlFor="comment"
+              className=" text-sm  absolute -mt-2 ml-4 mb-2 bg-white text-QuaternaryColor "
+            >
+              Comment
+            </label>
+            <input
+              id="comment"
+              type="text"
+              name="comment"
+              onChange={(e) =>
+                setstatusPayload({
+                  ...statusPayload,
+                  ["comment"]: e.target.value,
+                })
+              }
+              placeholder="Comment here"
+              className="w-full border p-4 rounded h-16 text-sm"
+            />
+          </div>
+
+          <div className="flex justify-end mt-4 gap-5">
+            <button
+              onClick={handleClose}
+              type="button"
+              className="text-sm hover:text-primaryColor hover:font-bold"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              onClick={changeStatusFunc}
+              className="text-sm hover:text-primaryColor text-primaryColor hover:font-bold"
+            >
+              {statusPayload.approvalStatus == "REJECTED"
+                ? "Review"
+                : "Approve"}
+            </button>
+          </div>
+
+          {/* Close button */}
+        </Box>
+      </Modal>
+
+
+      <Modal open={historyOpen} onClose={handleHistoryClose} aria-labelledby="modal-title">
+        <Box
+          sx={modelCss}
+        >
+          {/* Modal content */}
+
+          <div className="flex flex-col relative ">
+
+            <label className="text-sm font-bold mb-4">History</label>
+
+
+          <DataTable  
+            pagination={false}
+            columns={columnHistory}
+            data={historyData}
+          />
+
+          </div>
+
+          <div className="flex justify-end mt-4 gap-5">
+            <button
+              onClick={handleHistoryClose}
+              type="button"
+              className="text-sm hover:text-primaryColor hover:font-bold"
+            >
+              Close
+            </button>
+          </div>
+
+          {/* Close button */}
+        </Box>
+      </Modal>
+
+
     </div>
   );
-};
+}
 
 export default JournelVoucher;

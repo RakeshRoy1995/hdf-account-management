@@ -3,7 +3,7 @@ import DateFormate from "@/shared/date-formate/DateFormate";
 import Status from "@/shared/Status-component/Status";
 import React, { useEffect, useState } from "react";
 
-const PaymentVoucherForm = ({
+const ReceptVoucherForm = ({
   singleData,
   setsingleData,
   rows,
@@ -21,7 +21,7 @@ const PaymentVoucherForm = ({
 }: any) => {
   const [newRow, setNewRow] = useState({
     accountId: "",
-    amountDr: 0,
+    amountCr: 0,
   });
 
   const GLAccountName = (id: any) => {
@@ -33,7 +33,7 @@ const PaymentVoucherForm = ({
     setRows([...rows, newRow]);
     setNewRow({
       accountId: "",
-      amountDr: 0,
+      amountCr: 0,
     });
   };
 
@@ -51,14 +51,14 @@ const PaymentVoucherForm = ({
       {/* Form Fields */}
       <div className="grid grid-cols-2 gap-6 mb-6">
         <div>
-          <label className="block font-semibold mb-1">Payment Date:</label>
+          <label className="block font-semibold mb-1">Recept Date:</label>
 
           <DateFormate
             name="transDate"
             setsingleData={setsingleData}
             singleData={singleData}
             required={true}
-            label="Payment Date"
+            label="Recept Date"
           />
         </div>
         <div>
@@ -218,7 +218,7 @@ const PaymentVoucherForm = ({
           <label className="block font-semibold mb-1">Amount:</label>
           <input
             type="number"
-            name="amountCr"
+            name="amountDr"
             onChange={(e) => {
               if (Number(e.target.value) > 0 || e.target.value == "") {
                 setsingleData({
@@ -227,7 +227,7 @@ const PaymentVoucherForm = ({
                 });
               }
             }}
-            value={singleData?.amountCr}
+            value={singleData?.amountDr}
             placeholder="Amount More than 0"
             className="w-full p-2 border rounded"
           />
@@ -265,7 +265,7 @@ const PaymentVoucherForm = ({
           {rows.map((row, index) => (
             <tr key={index}>
               <td className="border p-2">{GLAccountName(row.accountId)}</td>
-              <td className="border p-2">{row.amountDr}</td>
+              <td className="border p-2">{row.amountCr}</td>
               <td className="border p-2">
                 <button
                   type="button"
@@ -318,16 +318,16 @@ const PaymentVoucherForm = ({
                 type="number"
                 className="w-full border p-1"
                 placeholder="Amount"
-                value={newRow.amountDr}
+                value={newRow.amountCr}
                 onChange={(e) => {
                   if (Number(e.target.value) > 0 || e.target.value == "") {
-                    handleInputChange(e, "amountDr");
+                    handleInputChange(e, "amountCr");
                   }
                 }}
               />
             </td>
 
-            {newRow.amountDr > 0 && newRow?.accountId && (
+            {newRow.amountCr > 0 && newRow?.accountId && (
               <td className="border p-2 text-center">
                 <button
                   type="button"
@@ -362,15 +362,15 @@ const PaymentVoucherForm = ({
 
           <div className="text-center">
             <label className="block font-semibold mb-1">
-              Total Amount: {rows.reduce((a, b) => a + Number(b.amountDr), 0)}
+              Total Amount: {rows.reduce((a, b) => a + Number(b.amountCr), 0)}
             </label>
           </div>
 
-          {/* total : {rows.reduce((a, b) => a + Number(b.amountDr), 0)} */}
+          {/* total : {rows.reduce((a, b) => a + Number(b.amountCr), 0)} */}
         </div>
       )}
     </div>
   );
 };
 
-export default PaymentVoucherForm;
+export default ReceptVoucherForm;

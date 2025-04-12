@@ -6,7 +6,6 @@ import useFetch from "@/hooks/useFetch";
 import UpdateButton from "@/shared/components/ButttonsCollection/UpdateButton";
 import AddButton from "@/shared/components/ButttonsCollection/AddButton";
 import Breadcrumb from "@/shared/Breadcumb/Breadcrumb";
-import PaymentVoucherForm from "./payment-voucher/PaymentVoucherForm";
 import { formatDate_3, get_role, modelCss } from "@/utils";
 import { get_all_data, submitFormData } from "@/api/Reqest";
 import { Modal, Tab } from "@mui/material";
@@ -16,11 +15,12 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import {History} from '@mui/icons-material';
 import DataTable from "react-data-table-component";
+import ReceptVoucherForm from "./recept-voucher/ReceptVoucherForm";
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 const token = localStorage.getItem("token");
 
-function PaymentVoucher() {
+function ReceptVoucher() {
   const {
     data,
     loading,
@@ -36,7 +36,7 @@ function PaymentVoucher() {
     singleData,
     addFormShow,
     setaddFormShow,
-  } = useFetch(`${API_URL}/payments`);
+  } = useFetch(`${API_URL}/receipts`);
 
   const [rows, setRows] = useState([]);
 
@@ -54,7 +54,7 @@ function PaymentVoucher() {
   };
 
   const fetchHistory = async (id: any) => {
-    const apiEndPoint = `payments/approval/history/${id}`;
+    const apiEndPoint = `receipts/approval/history/${id}`;
     const response = await get_all_data(apiEndPoint);
     setHistoryData(response?.data);
     setHistoryOpen(true);
@@ -204,17 +204,17 @@ function PaymentVoucher() {
       partnerOrganizationId: token?.user?.partnerOrganizationId || null,
       branchId: token?.user?.branchId || null,
       ...singleData,
-      paymentLines: rows,
+      receiptLines: rows,
     };
 
     obj.transDate = formatDate_3(obj.transDate);
     obj.chequeDate = formatDate_3(obj.chequeDate);
 
-    let page_list = `${API_URL}/payments`;
+    let page_list = `${API_URL}/receipts`;
     let method = "POST";
 
     if (singleData?.bankId) {
-      page_list = `${API_URL}/payments/${singleData?.paymentId}`;
+      page_list = `${API_URL}/receipts/${singleData?.paymentId}`;
       method = "PUT";
     }
     const options = {
@@ -266,7 +266,7 @@ function PaymentVoucher() {
 
   const fetchAppravalList = async () => {
     const type = get_role();
-    const page_list = `${API_URL}/payments/approval/by/role?currentPage=1&pageSize=10000&roleId=${type}`;
+    const page_list = `${API_URL}/receipts/approval/by/role?currentPage=1&pageSize=10000&roleId=${type}`;
     const { data }: any = await submitFormData(page_list, {});
     setallApprovalList(data?.content);
     // setMCPData(data?.content);
@@ -296,7 +296,7 @@ function PaymentVoucher() {
     };
 
     try {
-      const page_list = `${API_URL}/payments/approval/request/${statusPayload?.id}`;
+      const page_list = `${API_URL}/receipts/approval/request/${statusPayload?.id}`;
       await submitFormData(page_list, options);
 
       Swal.fire({
@@ -376,10 +376,10 @@ function PaymentVoucher() {
   return (
     <div>
       {addFormShow ? (
-        <Breadcrumb name1={"Payment Voucher"} name2={"Payment Voucher Setup"} />
+        <Breadcrumb name1={"Recept Voucher"} name2={"Recept Voucher Setup"} />
       ) : (
         <BreadcumbWithButton
-          name={"Payment Voucher"}
+          name={"Recept Voucher"}
           url={"#"}
           setaddFormShow={setaddFormShow}
         />
@@ -390,7 +390,7 @@ function PaymentVoucher() {
           className="bg-white rounded-2xl p-2 drop-shadow-lg mb-5"
           onSubmit={handleSubmit}
         >
-          <PaymentVoucherForm
+          <ReceptVoucherForm
             singleData={singleData}
             setsingleData={setsingleData}
             rows={rows}
@@ -542,4 +542,4 @@ function PaymentVoucher() {
   );
 }
 
-export default PaymentVoucher;
+export default ReceptVoucher;

@@ -55,6 +55,7 @@ import LedgerInformation from "@/pages/financial-report/ledger-information/Ledge
 import RecitVoucher from "@/pages/voucher/RecitVoucher";
 import JournelVoucher from "@/pages/voucher/JournelVoucher";
 import CashBook from "@/pages/cashbook/CashBook";
+import ReceptVoucher from "@/pages/voucher/ReceptVoucher";
 // import PaymentVoucher from "@/pages/voucher/PaymentVoucher";
 // import Accountingperiod from "@/pages/configure/Accounting-period/Accountingperiod";
 
@@ -126,7 +127,7 @@ const App: FC = () => {
               <Route path="/account/voucher" element={<Currency />} />
               <Route path="/account/journel-voucher" element={<JournelVoucher />} />
               <Route path="/account/payment-voucher" element={<PaymentVoucher />} />
-              <Route path="/account/receipt-voucher" element={<Currency />} />
+              <Route path="/account/receipt-voucher" element={<ReceptVoucher />} />
               <Route path="/account/trail-balance" element={<RecitVoucher />} />
               <Route path="/account/changes-equity" element={<ChargeInEquity />} />
               <Route path="/account/ledger-information" element={<LedgerInformation />} />

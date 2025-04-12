@@ -3,6 +3,7 @@ import cardImage from "../../../assets/main page/demopic.png";
 import { Modal, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { submitFormData } from "@/api/Reqest";
+import { modelCss } from "@/utils";
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
 const OutreachCards = ({
@@ -77,17 +78,7 @@ const OutreachCards = ({
       {/* MUI Modal */}
       <Modal open={open} onClose={handleClose} aria-labelledby="modal-title">
         <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
-            bgcolor: "background.paper",
-            borderRadius: "8px",
-            boxShadow: 24,
-            p: 4,
-          }}
+          sx={modelCss}
         >
           {/* Modal content */}
           <img
