@@ -18,7 +18,6 @@ export function formatDate(date: any) {
 }
 
 export function formatDate_3(date: any) {
-
   try {
     const yy = String(date.getFullYear()); // Get last two digits of the year
     const mm = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed, so add 1
@@ -352,3 +351,17 @@ export function DecimalPlaces(e: any, customeSize: number) {
     }
   }
 }
+
+export const modelCss = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "70%",
+  bgcolor: "background.paper",
+  borderRadius: "8px",
+  boxShadow: 24,
+  maxHeight: "90vh", // Limit height to viewport
+  overflowY: "auto",
+  p: 4,
+};
